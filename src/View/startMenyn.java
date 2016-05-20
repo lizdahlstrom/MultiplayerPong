@@ -1,5 +1,5 @@
-package View;
+package view;
 
-public class startMenyn {
+public class StartMenyn {
 
 }

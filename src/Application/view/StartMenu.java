@@ -1,5 +1,5 @@
 package Application.view;
 
-public class StartMenyn {
+public class StartMenu {
 
 }
