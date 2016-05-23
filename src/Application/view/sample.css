@@ -1,5 +1,29 @@
-.button {    -fx-text-fill: brighter-sky-blue;    
--fx-border-color: rgba(255, 255, 255, .80);    
--fx-border-radius: 8;    
--fx-padding: 6 6 6 6;    
--fx-font: bold italic 20pt "LucidaBrightDemiBold"; } /* ...more styling */
+
+
+.tableCol {
+-fx-background-color:white;
+-fx-font-family:"Serif Gothic Black";
+-fx-background-radius: 50%;
+-fx-background-insets: 0,1,2;
+} 
+
+
+#txtPongId {
+-fx-font: 80px SansSerif-Gothic;
+-fx-fill: white;
+}
+
+#btnEnterNameId {
+-fx-background-color: red;
+-fx-font-weight: bold;
+-fx-text-fill: black;
+
+}
+
+
+
+
+
+
+
+
