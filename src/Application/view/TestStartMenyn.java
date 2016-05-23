@@ -18,6 +18,8 @@ import javafx.stage.Stage;
 
 public class TestStartMenyn extends Application {
 	
+	
+	
 	private final TableView table = new TableView();
 
 	public static void main(String[] args) {
@@ -43,6 +45,8 @@ public class TestStartMenyn extends Application {
 		table.getColumns().addAll(rankCol, scoreCol, playerCol);
 		
 		vbox.getChildren().addAll(table);
+		
+		myScene.getStylesheets().add(getClass().getResource("sample.css").toExternalForm());
 		
 		 ((Group) myScene.getRoot()).getChildren().addAll(vbox);
 		 
