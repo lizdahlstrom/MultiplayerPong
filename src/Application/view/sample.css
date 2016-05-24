@@ -14,10 +14,15 @@
 }
 
 #btnEnterNameId {
--fx-background-color: red;
+-fx-background-color: blue;
 -fx-font-weight: bold;
 -fx-text-fill: black;
+}
 
+#btnStartId {
+-fx-background-color: green;
+-fx-font-weight: bold;
+-fx-text-fill: black;
 }
 
 

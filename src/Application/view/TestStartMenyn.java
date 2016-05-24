@@ -27,12 +27,11 @@ public class TestStartMenyn extends Application {
 	
 	Text txtPong;  //The text label of Pong.
 	
-	TextArea txtArea; //Text area displaying the players logging in to play.
+	TextArea txtArea; //Text area displaying the status of players logging in to play.
 	
-	Button btnEnterName;
+	Button btnEnterName, btnStart;
 	
 	
-
 	public static void main(String[] args) {
 		launch(args);
 }
@@ -69,6 +68,38 @@ public class TestStartMenyn extends Application {
 		
 		table.getColumns().addAll(rankCol, scoreCol, playerCol);
 		
+		/*
+		 * When the data model is outlined in the Person class, you can create an 
+		 * ObservableList array and define as many data rows as you would like to show 
+		 * in your table. The code fragment in Example 12-4 implements this task.
+		 * 
+		 * final ObservableList<Person> data = FXCollections.observableArrayList(
+    		new Person("Jacob", "Smith", "jacob.smith@example.com"),
+    		new Person("Isabella", "Johnson", "isabella.johnson@example.com"),
+    		new Person("Ethan", "Williams", "ethan.williams@example.com"),
+    		new Person("Emma", "Jones", "emma.jones@example.com"),
+    		new Person("Michael", "Brown", "michael.brown@example.com")
+			);
+			
+			The next step is to associate the data with the table columns. 
+			You can do this through the properties defined for each data element, 
+			as shown in Example 12-5.
+			
+			Example 12-5 Setting Data Properties to Columns
+
+			firstNameCol.setCellValueFactory(
+    		new PropertyValueFactory<Person,String>("firstName")
+			);
+			lastNameCol.setCellValueFactory(
+    		new PropertyValueFactory<Person,String>("lastName")
+			);
+			emailCol.setCellValueFactory(
+    		new PropertyValueFactory<Person,String>("email")
+			);
+		*/
+		
+		
+		
 		//Add the label Pong with CSS tag.
 		txtPong = new Text(475,85, "PONG");
 		txtPong.setId("txtPongId");
@@ -84,15 +115,17 @@ public class TestStartMenyn extends Application {
 		//Add the button, the player should enter his/her name.
 		btnEnterName = new Button("ENTER YOUR NAME");
 		btnEnterName.setId("btnEnterNameId");
-		btnEnterName.setLayoutX(538);
+		btnEnterName.setLayoutX(442);
 		btnEnterName.setLayoutY(290);
 		
-		
-		
-		
-		
+		//Add the Start button.
+		btnStart = new Button("START");
+		btnStart.setId("btnStartId");
+		btnStart.setLayoutX(686);
+		btnStart.setLayoutY(290);
+					
 		vbox.getChildren().addAll(table);
-		root.getChildren().addAll(txtPong,txtArea,btnEnterName);
+		root.getChildren().addAll(txtPong,txtArea,btnEnterName,btnStart);
 		
 		
 		//Apply custom look and feel to the scene
