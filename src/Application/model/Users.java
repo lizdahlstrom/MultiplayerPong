@@ -10,11 +10,14 @@ public class Users {
 	private final SimpleIntegerProperty score;
 	private final SimpleStringProperty name;
 	
-	private Users(byte ranking, int scoring, String naming) {
-        this.rank = new SimpleIntegerProperty (ranking);
+	
+	private Users(int i, int scoring, String naming) {
+        this.rank = new SimpleIntegerProperty (i);
         this.score = new SimpleIntegerProperty (scoring);
         this.name = new SimpleStringProperty (naming);
     }
+	
+	
 	
 	//Get the player's name.
 	public String getName() {
@@ -35,6 +38,9 @@ public class Users {
 	public void setScore(int scoring) {
 		score.set(scoring);
 	}
+	
+	//The object containing the player's name and score.
+	String nameAndScore = getName() + getScore();
 	
 	//Rank the players' score
 	public void setRank() {	

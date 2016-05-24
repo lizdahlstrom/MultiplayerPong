@@ -1,7 +1,10 @@
 package Application.view;
 
+import Application.model.Users;
 import javafx.application.Application; 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group; 
@@ -66,7 +69,7 @@ public class TestStartMenyn extends Application {
 		playerCol.getStyleClass().add("tableCol");
 		playerCol.setId("playerCol");
 		
-		table.getColumns().addAll(rankCol, scoreCol, playerCol);
+		
 		
 		/*
 		 * When the data model is outlined in the Person class, you can create an 
@@ -98,6 +101,12 @@ public class TestStartMenyn extends Application {
 			);
 		*/
 		
+		//Show the players' names, scores, ranking.
+		TableView<Users> table = new TableView<Users>();
+	    final ObservableList<Users> data =
+	        FXCollections.observableArrayList(
+	        );
+		
 		
 		
 		//Add the label Pong with CSS tag.
@@ -123,6 +132,9 @@ public class TestStartMenyn extends Application {
 		btnStart.setId("btnStartId");
 		btnStart.setLayoutX(686);
 		btnStart.setLayoutY(290);
+		
+		table.setItems(data);
+		table.getColumns().addAll(rankCol, scoreCol, playerCol);
 					
 		vbox.getChildren().addAll(table);
 		root.getChildren().addAll(txtPong,txtArea,btnEnterName,btnStart);
