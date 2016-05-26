@@ -141,7 +141,7 @@ public class Pong extends Application {
 		Scene theScene = new Scene(root);
 		theStage.setScene(theScene);
 
-				
+		soundEngine.loadAudioAssets();		
 		
 		Canvas canvas = new Canvas(WIDTH, HEIGHT);
 		root.getChildren().add(canvas);
