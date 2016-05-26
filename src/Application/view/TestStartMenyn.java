@@ -1,27 +1,37 @@
 package Application.view;
 
+/*
+ * The MainController / Client sockets have to read from Servers with Sockets?
+ */
+
 import Application.model.Users;
 import javafx.application.Application; 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group; 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color; 
 import javafx.scene.shape.Line; 
 import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text; 
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage; 
 
 public class TestStartMenyn extends Application {
@@ -32,19 +42,29 @@ public class TestStartMenyn extends Application {
 	
 	TextArea txtArea; //Text area displaying the status of players logging in to play.
 	
-	Button btnEnterName, btnStart;
+	Button btnEnterName, btnEnterName2, btnStart;
+	
+	Label lblScene2;
+	
+	FlowPane pane2;
+	
+	Scene scene2;
+	
+	Stage theStage, newStage;
+	
+	TextField txtYourName;
+	
+	
 	
 	
 	public static void main(String[] args) {
 		launch(args);
 }
 	
-	@Override public void init() {
-		
-	}
-
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		theStage = primaryStage;
 		primaryStage.setTitle("Welcome to your Pong adventure");
 		
 		Group root = new Group();
@@ -68,47 +88,13 @@ public class TestStartMenyn extends Application {
 		TableColumn playerCol = new TableColumn("PLAYER");
 		playerCol.getStyleClass().add("tableCol");
 		playerCol.setId("playerCol");
-		
-		
-		
-		/*
-		 * When the data model is outlined in the Person class, you can create an 
-		 * ObservableList array and define as many data rows as you would like to show 
-		 * in your table. The code fragment in Example 12-4 implements this task.
-		 * 
-		 * final ObservableList<Person> data = FXCollections.observableArrayList(
-    		new Person("Jacob", "Smith", "jacob.smith@example.com"),
-    		new Person("Isabella", "Johnson", "isabella.johnson@example.com"),
-    		new Person("Ethan", "Williams", "ethan.williams@example.com"),
-    		new Person("Emma", "Jones", "emma.jones@example.com"),
-    		new Person("Michael", "Brown", "michael.brown@example.com")
-			);
-			
-			The next step is to associate the data with the table columns. 
-			You can do this through the properties defined for each data element, 
-			as shown in Example 12-5.
-			
-			Example 12-5 Setting Data Properties to Columns
-
-			firstNameCol.setCellValueFactory(
-    		new PropertyValueFactory<Person,String>("firstName")
-			);
-			lastNameCol.setCellValueFactory(
-    		new PropertyValueFactory<Person,String>("lastName")
-			);
-			emailCol.setCellValueFactory(
-    		new PropertyValueFactory<Person,String>("email")
-			);
-		*/
-		
+				
 		//Show the players' names, scores, ranking.
 		TableView<Users> table = new TableView<Users>();
 	    final ObservableList<Users> data =
 	        FXCollections.observableArrayList(
 	        );
-		
-		
-		
+					
 		//Add the label Pong with CSS tag.
 		txtPong = new Text(475,85, "PONG");
 		txtPong.setId("txtPongId");
@@ -127,11 +113,69 @@ public class TestStartMenyn extends Application {
 		btnEnterName.setLayoutX(442);
 		btnEnterName.setLayoutY(290);
 		
+		
+		//Handle the action events for the btnEnterName and btnEnterName2.
+		btnEnterName.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent ae) {
+				if (ae.getSource()==btnEnterName)
+			         newStage.showAndWait();
+			     else
+			         newStage.close();
+			}
+		});
+				
+		btnEnterName2 = new Button("OK");
+		btnEnterName2.setStyle("-fx-background-color:pink;-fx-font-weight:bold;");
+		txtYourName = new TextField();
+		lblScene2 = new Label("NAME:");
+		pane2 = new FlowPane(10,10);
+		pane2.setVgap(10);
+		pane2.setStyle("-fx-background-color:yellow;-fx-padding:10px;");
+	     //add everything to panes
+	    pane2.getChildren().addAll(lblScene2,txtYourName,btnEnterName2);
+	    
+	    //Create scene for pane2.
+	    scene2 = new Scene(pane2, 300, 160);
+	    //Make another stage for scene2.
+	    newStage = new Stage();
+	    newStage.setScene(scene2);
+	    //Tell stage that its purpose is pop-up (Modal).
+	    newStage.initModality(Modality.APPLICATION_MODAL);
+	    newStage.setTitle("Enter your name");
+	    
+	    txtYourName.setOnAction( (aeYourName) -> txtArea.setText("You must add your name"+
+	    										txtYourName.getText()));
+	    
+	    //Action events are generated when OK is pressed.
+	    btnEnterName2.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent eventOK) {
+				if (eventOK.getSource()==btnEnterName2 && txtYourName.getText()!="")
+					newStage.close();
+				txtArea.setText("Player:"+ " " + txtYourName.getText()+" " + " " + "Status:" + " "
+					+"logged in");			
+			} 			
+	    } 	
+	);    
+	
+		    
 		//Add the Start button.
-		btnStart = new Button("START");
+		btnStart = new Button("START GAME");
 		btnStart.setId("btnStartId");
-		btnStart.setLayoutX(686);
+		btnStart.setLayoutX(650);
 		btnStart.setLayoutY(290);
+		
+		//When the player clicks 'Start Game' this information is sent to the Server which
+		//initialises the game. 
+		btnStart.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		}
+				);
 		
 		table.setItems(data);
 		table.getColumns().addAll(rankCol, scoreCol, playerCol);
@@ -148,8 +192,8 @@ public class TestStartMenyn extends Application {
 	        primaryStage.setScene(myScene);
 	        primaryStage.show();
 
-		
-		
+	       
+			
 	}
-
+	
 }
