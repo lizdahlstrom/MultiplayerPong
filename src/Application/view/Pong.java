@@ -1,6 +1,10 @@
-package ponggame;
+package Application.view;
 
 
+import Application.model.Ball;
+import Application.model.Paddle;
+import Application.model.ScoreBoard;
+import Application.model.SoundEngine;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -19,64 +23,76 @@ public class Pong extends Application {
 	final String appName = "Pong";
 	final int FPS = 60;
 	final static int WIDTH = 800;
+	public static int getWidth() {
+		return WIDTH;
+	}
+
+	public static int getHeight() {
+		return HEIGHT;
+	}
+
 	final static int HEIGHT = 600;
 	final static int EDGE = 30;
 
 	Ball ball;
 	Paddle pleft, pright;
 	ScoreBoard score;
-	
+
 	//SoundEngine pSound0, pSound1, pSound2, pSound3, pSound4, pSound5;
-	
+
 	SoundEngine soundEngine = new SoundEngine();
-	
-	
+
+
 	//Sätta upp initial struktur och värden
 	void initialize()
 	{
-		ball = new Ball();
-		pleft = new Paddle(EDGE);
-		pright = new Paddle(WIDTH - EDGE);
-		score = new ScoreBoard();
+		ball = new Ball(this, soundEngine);
+		pleft = new Paddle(EDGE, this);
+		pright = new Paddle(WIDTH - EDGE, this);
+		score = new ScoreBoard(this);
 	}
-	
+
+	public static int getEdge() {
+		return EDGE;
+	}
+
 	void setHandlers(Scene scene)
 	{
 		scene.setOnKeyPressed(
-			e -> {
-				KeyCode c = e.getCode();
-				switch (c) {
+				e -> {
+					KeyCode c = e.getCode();
+					switch (c) {
 					case A: pleft.setUpKey(true);
-								break;
+					break;
 					case Z: pleft.setDownKey(true);
-								break;
+					break;
 					case K: pright.setUpKey(true);
-								break;
+					break;
 					case M: pright.setDownKey(true);
-								break;
+					break;
 					default:
-								break;
+						break;
+					};
 				}
-			}
-		);
-		
+				);
+
 		scene.setOnKeyReleased(
 				e -> {
 					KeyCode c = e.getCode();
 					switch (c) {
-						case A: pleft.setUpKey(false);
-									break;
-						case Z: pleft.setDownKey(false);
-									break;
-						case K: pright.setUpKey(false);
-									break;
-						case M: pright.setDownKey(false);
-									break;
-						default:
-									break;
+					case A: pleft.setUpKey(false);
+					break;
+					case Z: pleft.setDownKey(false);
+					break;
+					case K: pright.setUpKey(false);
+					break;
+					case M: pright.setDownKey(false);
+					break;
+					default:
+						break;
 					}
 				}
-			);
+				);
 	}
 
 
@@ -88,10 +104,10 @@ public class Pong extends Application {
 		ball.move();
 		ball.checkHit(pleft);
 		ball.checkHit(pright);
-		checkScore();
 		playAudioClip();
+		checkScore();
 	}
-	
+
 	void checkScore() {
 		boolean scored = false;
 		if (ball.getX() < EDGE) {
@@ -105,16 +121,17 @@ public class Pong extends Application {
 		if (scored)
 			ball.reset();
 	}
-	
-	
+
 	private void playAudioClip() {
-		if (ball.getX() < EDGE) {
+		if (ball.getX() < EDGE || ball.getX() >= WIDTH - EDGE ) {
+			System.out.println("Playing sound 4");
 			soundEngine.playpSound4();
-			
 		}
+
+
 	}
-	
-	
+
+
 	//Rita spelplan
 	void render(GraphicsContext gc) {
 		// fyll bakgrund
@@ -132,7 +149,7 @@ public class Pong extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	@Override
 	public void start(Stage theStage) {
 		theStage.setTitle(appName);
@@ -141,19 +158,17 @@ public class Pong extends Application {
 		Scene theScene = new Scene(root);
 		theStage.setScene(theScene);
 
-		soundEngine.loadAudioAssets();		
-		
 		Canvas canvas = new Canvas(WIDTH, HEIGHT);
 		root.getChildren().add(canvas);
 
 		GraphicsContext gc = canvas.getGraphicsContext2D();
-		
-		
+
+
 		// Initial setup
 		initialize();
 		setHandlers(theScene);
-		
-		
+
+
 		//animeringsloop(game loop)
 		KeyFrame kf = new KeyFrame(Duration.millis(1000 / FPS),
 				e -> {
@@ -162,7 +177,7 @@ public class Pong extends Application {
 					// rita bild
 					render(gc);
 				}
-			);
+				);
 		Timeline mainLoop = new Timeline(kf);
 		mainLoop.setCycleCount(Animation.INDEFINITE);
 		mainLoop.play();
