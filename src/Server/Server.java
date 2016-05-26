@@ -36,6 +36,7 @@ public class Server extends Connection {
 				// send response back to client
 				// TODO: send response to other clients
 				byte[] sendData = new byte[1024];
+				String response = "Recieved data from client..";
 				sendData = response.getBytes();
 
 				DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ipAddress, clientPort);
