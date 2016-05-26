@@ -21,17 +21,17 @@ public class SoundEngine {
 	
 	
 	public void loadAudioAssets() {
-		pAudioFile0 = getClass().getResource("/ball_start.wav");//relativ sökväg istället för hårdkodat
+		pAudioFile0 = getClass().getResource("resources/ball_start.wav");//relativ sökväg istället för hårdkodat
 		pSound0 = new AudioClip(pAudioFile0.toString());
-		pAudioFile1 = getClass().getResource("/R_paddle_hit.wav");
+		pAudioFile1 = getClass().getResource("resources/R_paddle_hit.wav");
 		pSound1 = new AudioClip(pAudioFile1.toString());
-		pAudioFile2 = getClass().getResource("/L_paddle_hit.wav");
+		pAudioFile2 = getClass().getResource("resources/L_paddle_hit.wav");
 		pSound2 = new AudioClip(pAudioFile2.toString());
-		pAudioFile3 = getClass().getResource("/top_bottom_hit.wav");
+		pAudioFile3 = getClass().getResource("resources/top_bottom_hit.wav");
 		pSound3 = new AudioClip(pAudioFile3.toString());
-		pAudioFile4 = getClass().getResource("/back_wall_hit.wav");
+		pAudioFile4 = getClass().getResource("resources/back_wall_hit.wav");
 		pSound4 = new AudioClip(pAudioFile4.toString());
-		pAudioFile5 = getClass().getResource("/intro.wav");
+		pAudioFile5 = getClass().getResource("resources/intro.wav");
 		pSound5 = new AudioClip(pAudioFile5.toString());
 	}
 
