@@ -6,10 +6,16 @@ import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import Application.controller.MainController;
+import Application.view.TestStartMenyn;
 
 public class Client extends Connection implements Runnable {
 	// Instance variables
 	static private PlayerModel playerModel;
+	
+	MainController mController = new MainController();
+	MainController playerName; //Get the player's entered name.
+	
 
 	// Constructor
 	public Client(PlayerModel playerModel) {
@@ -54,6 +60,9 @@ public class Client extends Connection implements Runnable {
 			e.printStackTrace();
 		}
 
+	}
+	public String sendPlayerName(playerName) {
+		return 
 	}
 }
 

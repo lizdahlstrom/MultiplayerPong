@@ -1,5 +1,7 @@
 package Application.model;
 
+//VÄVA IN JSON OCH GSON
+
 /*
  * Java does not have explicit peer-to-peer communication in its core networking API.
  * However, applications can easily offer peer-to-peer communications in several ways, most commonly by

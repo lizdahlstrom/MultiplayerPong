@@ -52,7 +52,7 @@ public class TestStartMenyn extends Application {
 	
 	Stage theStage, newStage;
 	
-	TextField txtYourName;
+	private TextField txtYourName;
 	
 	
 	
@@ -126,13 +126,13 @@ public class TestStartMenyn extends Application {
 				
 		btnEnterName2 = new Button("OK");
 		btnEnterName2.setStyle("-fx-background-color:pink;-fx-font-weight:bold;");
-		txtYourName = new TextField();
+		setTxtYourName(new TextField());
 		lblScene2 = new Label("NAME:");
 		pane2 = new FlowPane(10,10);
 		pane2.setVgap(10);
 		pane2.setStyle("-fx-background-color:yellow;-fx-padding:10px;");
 	     //add everything to panes
-	    pane2.getChildren().addAll(lblScene2,txtYourName,btnEnterName2);
+	    pane2.getChildren().addAll(lblScene2,getTxtYourName(),btnEnterName2);
 	    
 	    //Create scene for pane2.
 	    scene2 = new Scene(pane2, 300, 160);
@@ -143,16 +143,16 @@ public class TestStartMenyn extends Application {
 	    newStage.initModality(Modality.APPLICATION_MODAL);
 	    newStage.setTitle("Enter your name");
 	    
-	    txtYourName.setOnAction( (aeYourName) -> txtArea.setText("You must add your name"+
-	    										txtYourName.getText()));
+	    getTxtYourName().setOnAction( (aeYourName) -> txtArea.setText("You must add your name"+
+	    										getTxtYourName().getText()));
 	    
 	    //Action events are generated when OK is pressed.
 	    btnEnterName2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent eventOK) {
-				if (eventOK.getSource()==btnEnterName2 && txtYourName.getText()!="")
+				if (eventOK.getSource()==btnEnterName2 && getTxtYourName().getText()!="")
 					newStage.close();
-				txtArea.setText("Player:"+ " " + txtYourName.getText()+" " + " " + "Status:" + " "
+				txtArea.setText("Player:"+ " " + getTxtYourName().getText()+" " + " " + "Status:" + " "
 					+"logged in");			
 			} 			
 	    } 	
@@ -194,6 +194,16 @@ public class TestStartMenyn extends Application {
 
 	       
 			
+	}
+
+
+	public TextField getTxtYourName() {
+		return txtYourName;
+	}
+
+
+	public void setTxtYourName(TextField txtYourName) {
+		this.txtYourName = txtYourName;
 	}
 	
 }
