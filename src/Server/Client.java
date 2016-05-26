@@ -3,24 +3,35 @@ package Server;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import Application.controller.MainController;
-import Application.view.TestStartMenyn;
+import Application.view.StartMenu;
 
 public class Client extends Connection implements Runnable {
 	// Instance variables
 	static private PlayerModel playerModel;
 	
-	MainController mController = new MainController();
-	MainController playerName; //Get the player's entered name.
 	
-
-	// Constructor
-	public Client(PlayerModel playerModel) {
+	MainController mController = new MainController();
+	Serializable playerName; //Get the player's entered name.
+	
+	
+	// Constructor 1
+	public Client(PlayerModel playerModel, MainController mController) {
 		this.playerModel = playerModel;
+		this.mController = mController;
+		
 	}
+	
+	// Constructor 2
+	public Client () {
+		playerName = mController.getPlayerName();
+	}
+	
+	
 
 	// RUN METHOD
 	@Override
@@ -30,7 +41,8 @@ public class Client extends Connection implements Runnable {
 		try {
 			serverIpAddress = InetAddress.getByName(host);
 
-			DatagramSocket socket = new DatagramSocket();
+			DatagramSocket socket = new DatagramSocket(0);
+			socket.setSoTimeout(10000);
 			DatagramPacket packet = new DatagramPacket(buf, buf.length);
 
 			/*
@@ -47,13 +59,21 @@ public class Client extends Connection implements Runnable {
 			ooStream.writeObject(playerModel);
 			byte[] sendData = new byte[1024];
 			sendData = baoStream.toByteArray();
+			
+			
+			/////////////////////////////////////////////////
+			byte[] sendName = ((String) playerName).getBytes();
+			sendName =baoStream.toByteArray();
+			//////////////////////////////////////////////////
+			
+			
 
 			// buffer
 			/*
 			 * byte[] sendData = new byte[1]; sendData = message.getBytes();
 			 */
 
-			DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, serverIpAddress, port);
+			DatagramPacket sendPacket = new DatagramPacket(sendData,sendData.length, serverIpAddress, port);
 			socket.send(sendPacket);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -61,9 +81,7 @@ public class Client extends Connection implements Runnable {
 		}
 
 	}
-	public String sendPlayerName(playerName) {
-		return 
-	}
+	
 }
 
 // Thread for recieving packets

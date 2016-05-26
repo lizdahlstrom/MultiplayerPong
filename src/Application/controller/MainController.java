@@ -1,10 +1,10 @@
 package Application.controller;
 
-import Application.view.TestStartMenyn;
+import Application.view.StartMenu;
 
 public class MainController {
 	
-	TestStartMenyn testStart = new TestStartMenyn();
+	StartMenu testStart = new StartMenu();
 	
 	
 	public String getPlayerName() {
