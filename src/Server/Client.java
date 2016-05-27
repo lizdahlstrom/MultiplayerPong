@@ -16,7 +16,7 @@ public class Client extends Connection implements Runnable {
 	
 	
 	MainController mController = new MainController();
-	Serializable playerName; //Get the player's entered name.
+	String playerName; //Get the player's entered name.
 	
 	
 	// Constructor 1
@@ -62,11 +62,10 @@ public class Client extends Connection implements Runnable {
 			
 			
 			/////////////////////////////////////////////////
-			byte[] sendName = ((String) playerName).getBytes();
-			sendName =baoStream.toByteArray();
+			String sendName = playerName;
+			byte[] nameData = sendName.getBytes();		
 			//////////////////////////////////////////////////
-			
-			
+					
 
 			// buffer
 			/*
