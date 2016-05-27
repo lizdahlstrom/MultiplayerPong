@@ -154,7 +154,7 @@ private final TableView table = new TableView(); //Table shows the past scores.
 				if (eventOK.getSource()==btnEnterName2 && getTxtYourName().getText()!="")
 					newStage.close();
 				txtArea.setText("Player:"+ " " + getTxtYourName().getText()+" " + " " + "Status:" + " "+" " 
-					+ cr.setStrData()
+					//+ cr.setStrData()
 					);			
 			} 			
 	    } 	
