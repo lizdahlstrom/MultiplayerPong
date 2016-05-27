@@ -1,5 +1,19 @@
 package Server;
 
+/*
+ * Java’s implementation of UDP is split into two classes: DatagramPacket and Datagram Socket. 
+ * The DatagramPacket class stuffs bytes of data into UDP packets called datagrams and lets you 
+ * unstuff datagrams that you receive. A DatagramSocket sends as well as receives UDP datagrams. 
+ * To send data, you put the data in a DatagramPacket and send the packet using a DatagramSocket. 
+ * To receive data, you take a DatagramPacket object from a DatagramSocket and then inspect the contents 
+ * of the packet. The sockets themselves are very simple creatures. In UDP, everything about a datagram, 
+ * including the address to which it is directed, is included in the packet itself; the socket only needs 
+ * to know the local port on which to listen or send. 
+ * 
+ * DatagramPacket uses different constructors depending on whether the packet will be used to send data 
+ * or to receive data. 
+ */
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -17,6 +31,8 @@ public class Client extends Connection implements Runnable {
 	
 	MainController mController = new MainController();
 	String playerName; //Get the player's entered name.
+	
+	 
 	
 	
 	// Constructor 1
@@ -61,12 +77,13 @@ public class Client extends Connection implements Runnable {
 			sendData = baoStream.toByteArray();
 			
 			
-			/////////////////////////////////////////////////
+			//SEND THE PLAYER'S ENTERED NAME TO THE SERVER.
 			String sendName = playerName;
-			byte[] nameData = sendName.getBytes();		
-			//////////////////////////////////////////////////
+			byte[] nameData = sendName.getBytes("UTF-8");
+			DatagramPacket sendingName = new DatagramPacket(nameData,nameData.length,serverIpAddress, port);
+			socket.send(sendingName);
+			
 					
-
 			// buffer
 			/*
 			 * byte[] sendData = new byte[1]; sendData = message.getBytes();
@@ -79,37 +96,6 @@ public class Client extends Connection implements Runnable {
 			e.printStackTrace();
 		}
 
-	}
-	
+	}	
 }
 
-// Thread for recieving packets
-class ClientRecieve implements Runnable {
-	// Instance variables
-	DatagramPacket packet;
-	DatagramSocket socket;
-
-	// Constructor
-	public ClientRecieve(DatagramSocket socket, DatagramPacket packet) {
-		this.socket = socket;
-		this.packet = packet;
-	}
-
-	@Override
-	public void run() {
-
-		while (true) {
-			try {
-				socket.receive(packet);
-				String strData = new String(packet.getData());
-				strData = strData.trim();
-				System.out.println("Message recieved: " + strData);
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-	}
-}

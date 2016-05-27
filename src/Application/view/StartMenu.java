@@ -1,5 +1,7 @@
 package Application.view;
 
+import Application.controller.ClientReceive;
+import Application.controller.MainController;
 import Application.model.Users;
 import javafx.application.Application; 
 import javafx.beans.value.ObservableValue;
@@ -31,6 +33,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage; 
 
 public class StartMenu extends Application {
+	
+	
+	ClientReceive cr = new ClientReceive();
+	
+	//MainController mc = new MainController (); //WHEN IMPLEMENTED LEADS TO 'STACKOVERFLOW'
 	
 private final TableView table = new TableView(); //Table shows the past scores.
 	
@@ -146,8 +153,9 @@ private final TableView table = new TableView(); //Table shows the past scores.
 			public void handle(ActionEvent eventOK) {
 				if (eventOK.getSource()==btnEnterName2 && getTxtYourName().getText()!="")
 					newStage.close();
-				txtArea.setText("Player:"+ " " + getTxtYourName().getText()+" " + " " + "Status:" + " "
-					+"logged in");			
+				txtArea.setText("Player:"+ " " + getTxtYourName().getText()+" " + " " + "Status:" + " "+" " 
+					+ cr.setStrData()
+					);			
 			} 			
 	    } 	
 	);    
