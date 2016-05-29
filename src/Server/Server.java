@@ -128,8 +128,6 @@ public class Server extends Connection {
 				new ByteArrayOutputStream();
 		ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
 		byte buf[];
-
-
 	}
 
 	public static boolean checkReadyStatus(){
