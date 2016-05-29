@@ -1,5 +1,7 @@
 package Application.view;
 
+import java.util.EventListener;
+
 import Application.controller.ClientReceive;
 import Application.controller.MainController;
 import Application.model.Users;
@@ -34,18 +36,20 @@ import javafx.stage.Stage;
 
 public class StartMenu extends Application {
 	
-	
-	ClientReceive cr = new ClientReceive();
-	
-	//MainController mc = new MainController (); //WHEN IMPLEMENTED LEADS TO 'STACKOVERFLOW'
-	
-private final TableView table = new TableView(); //Table shows the past scores.
+
+	private final TableView table = new TableView(); //Table shows the past scores.
+
+	ClientReceive cr;
 	
 	Text txtPong;  //The text label of Pong.
 	
 	TextArea txtArea; //Text area displaying the status of players logging in to play.
 	
-	Button btnEnterName, btnEnterName2, btnStart;
+	Button btnEnterName;
+
+	Button btnEnterName2;
+
+	Button btnStart;
 	
 	Label lblScene2;
 	
@@ -53,9 +57,22 @@ private final TableView table = new TableView(); //Table shows the past scores.
 	
 	Scene scene2;
 	
-	Stage theStage, newStage;
+	Stage theStage;
+
+	Stage newStage;
 	
-	private TextField txtYourName;
+	TextField txtYourName;
+	
+	public StartMenu (ClientReceive cr) {
+		this.cr= cr;
+	}
+	
+	/*
+	//Method that listens.
+	public void addViewListener (EventHandler<ActionEvent> listenForButton) {
+			btnEnterName2.setOnAction(listenForButton);				
+	}
+	*/
 	
 	
 	public static void main(String[] args) {
@@ -75,8 +92,8 @@ private final TableView table = new TableView(); //Table shows the past scores.
 		
 		
 		//Adding the TableView Highscore list to VBox.
-		final VBox vbox = new VBox(5); //space between child nodes only
-		vbox.setPadding(new Insets(10, 0, 0, 10)); //padding between vbox border and child node
+		final VBox vbox = new VBox(5); //Space between child nodes only
+		vbox.setPadding(new Insets(10, 0, 0, 10)); //Padding between vbox border and child node
 		
 		TableColumn rankCol = new TableColumn("RANK");
 		rankCol.getStyleClass().add("tableCol");
@@ -147,14 +164,15 @@ private final TableView table = new TableView(); //Table shows the past scores.
 	    getTxtYourName().setOnAction( (aeYourName) -> txtArea.setText("You must add your name"+
 	    										getTxtYourName().getText()));
 	    
+	    
 	    //Action events are generated when OK is pressed.
 	    btnEnterName2.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent eventOK) {
 				if (eventOK.getSource()==btnEnterName2 && getTxtYourName().getText()!="")
 					newStage.close();
-				txtArea.setText("Player:"+ " " + getTxtYourName().getText()+" " + " " + "Status:" + " "+" " 
-					//+ cr.setStrData()
+				txtArea.setText("Player:"+ " " + getTxtYourName().getText()+" " + " " + "Status:" + " " 
+					+ cr.setStrData()
 					);			
 			} 			
 	    } 	
@@ -192,14 +210,11 @@ private final TableView table = new TableView(); //Table shows the past scores.
 		((Group) myScene.getRoot()).getChildren().addAll(vbox);
 		 
 	        primaryStage.setScene(myScene);
-	        primaryStage.show();
-
-	       
-			
+	        primaryStage.show();			
 	}
 
 
-	public TextField getTxtYourName() {
+	public TextField getTxtYourName() {	
 		return txtYourName;
 	}
 

@@ -29,7 +29,7 @@ public class Client extends Connection implements Runnable {
 	static private PlayerModel playerModel;
 	
 	
-	MainController mController = new MainController();
+	MainController mController;
 	String playerName; //Get the player's entered name.
 	
 	 

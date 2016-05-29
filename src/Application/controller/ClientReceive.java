@@ -42,7 +42,9 @@ public class ClientReceive implements Runnable {
 		}
 		
 		public String setStrData() {
-			return strData;
+			if(strData != null){
+			return strData;}
+			return null;
 		}
 	}
 
