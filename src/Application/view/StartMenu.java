@@ -22,7 +22,7 @@ import javafx.stage.Stage;
 public class StartMenu {
 
 	//Instance variables
-	private final TableView table = new TableView(); //Table shows the past scores.
+	private final TableView table; // = new TableView(); //Table shows the past scores.
 	private Text txtPong;  //The text label of Pong.
 	private TextArea txtArea; //Text area displaying the status of players logging in to play.
 	private Button btnEnterName;
@@ -61,11 +61,13 @@ public class StartMenu {
 		playerCol.getStyleClass().add("tableCol");
 		playerCol.setId("playerCol");
 
+		/*
 		//Show the players' names, scores, ranking.
 		TableView<Users> table = new TableView<Users>();
 		final ObservableList<Users> data =
 				FXCollections.observableArrayList(
 						);
+		*/
 
 		//Add the label Pong with CSS tag.
 		txtPong = new Text(475,85, "PONG");
@@ -131,7 +133,8 @@ public class StartMenu {
 		}
 				);
 
-		table.setItems(data);
+		//table.setItems(data);
+		table = new TableView();
 		table.getColumns().addAll(rankCol, scoreCol, playerCol);
 
 		vbox.getChildren().addAll(table);
@@ -143,6 +146,7 @@ public class StartMenu {
 
 		((Group) menuScene.getRoot()).getChildren().addAll(vbox);
 	}
+	
 
 	// Setters, getters
 

@@ -1,5 +1,6 @@
 package Application.controller;
 
+import Application.model.ReadingToHighScore;
 import Application.model.StartModel;
 import Application.model.WritingToHighScore;
 import Application.view.StartMenu;
@@ -8,7 +9,8 @@ public class StartController {
 	//Instance variables
 	private StartModel startModel;
 	private StartMenu startView;
-	private WritingToHighScore writingToHighScore;
+	//private WritingToHighScore writingToHighScore;
+	private ReadingToHighScore readingToHighScore;
 
 	// Controller
 	public StartController(){
@@ -19,18 +21,18 @@ public class StartController {
 			if (eventOK.getSource()==startView.getInputNameBtn() && startView.getTxtYourName().getText()!="")
 				startView.getNewStage().close();
 			startView.getTxtArea().setText("Player:"+ " " + startView.getTxtYourName().getText()+" " + " " + "Status:" + " " 
-					+ startModel.getClientReceive().setStrData());			
+					+ startModel.getClientReceive().setStrData());
+			//startView.getTable().setItems(writingToHighScore.gethsObject);
 		});
 
 		startView.getTxtArea().setText(startModel.getTestStr());
-
-
 	}
 
 	private void initComponents(){
 		startModel = new StartModel();
 		startView = new StartMenu();
-		writingToHighScore = new WritingToHighScore();
+		//writingToHighScore = new WritingToHighScore();
+		readingToHighScore = new ReadingToHighScore();
 	}
 
 
@@ -53,8 +55,14 @@ public class StartController {
 		this.startView = startMenu;
 	}
 	
+	/*
 	public  WritingToHighScore getWritingToHighScore() {
 		return writingToHighScore;
+	}
+	*/
+	
+	public ReadingToHighScore getReadingToHighScore() {
+		return readingToHighScore;
 	}
 
 
