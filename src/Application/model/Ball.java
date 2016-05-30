@@ -53,6 +53,7 @@ public class Ball {
 		// omvänd riktning
 		soundEngine.playpSound1();
 		vx = -vx;
+		System.out.println("PADkolision: " + py1 + "Vad är py2: " + py2);
 	}
 
 	public void move() {
@@ -62,6 +63,7 @@ public class Ball {
 		if (y < RADIUS || y+RADIUS > pong.getHeight()){
 			vy = -vy;
 			soundEngine.playpSound2();
+			System.out.println("kolisionsdata top o botten med riktning: " + "x: " + x + "y: " + y + "vx: " + vx + "vy: " + vy);
 		}
 
 	}

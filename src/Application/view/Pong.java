@@ -20,7 +20,7 @@ import javafx.util.Duration;
 
 
 public class Pong extends Application {
-	final String appName = "Pong";
+	final String appName = "Tennis";
 	final int FPS = 60;
 	final static int WIDTH = 800;
 	public static int getWidth() {
@@ -73,6 +73,7 @@ public class Pong extends Application {
 					default:
 						break;
 					};
+					
 				}
 				);
 
