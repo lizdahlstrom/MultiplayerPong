@@ -21,7 +21,8 @@ public class Server extends Connection {
 	static DatagramPacket packet;
 	static InetAddress ip;
 	static byte[] buf = new byte[1024];
-	static InetAddress [] clientIps = new InetAddress[2]; // only room for two
+	static final int MAX_CLIENTS = 2;
+	static InetAddress [] clientIps = new InetAddress[MAX_CLIENTS]; // only room for two
 
 	static PlayerPacket[] users = new PlayerPacket[2]; // room for 2 users
 

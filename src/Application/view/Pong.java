@@ -8,52 +8,66 @@ import Application.model.SoundEngine;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
-public class Pong extends Application {
+public class Pong {
 	final String appName = "Tennis";
 	final int FPS = 60;
 	final static int WIDTH = 800;
-	public static int getWidth() {
-		return WIDTH;
-	}
+	private Timeline mainLoop;
+	private Scene theScene;
 
-	public static int getHeight() {
-		return HEIGHT;
-	}
 
 	final static int HEIGHT = 600;
 	final static int EDGE = 30;
 
-	Ball ball;
-	Paddle pleft, pright;
-	ScoreBoard score;
+	private Ball ball;
+	private Paddle pleft, pright;
+	private ScoreBoard score;
 
 	//SoundEngine pSound0, pSound1, pSound2, pSound3, pSound4, pSound5;
 
 	SoundEngine soundEngine = new SoundEngine();
 
 
-	//Sätta upp initial struktur och värden
-	void initialize()
-	{
-		ball = new Ball(this, soundEngine);
-		pleft = new Paddle(EDGE, this);
-		pright = new Paddle(WIDTH - EDGE, this);
-		score = new ScoreBoard(this);
-	}
+	public Pong (ScoreBoard scoreBoard, Ball ball, Paddle pleft, Paddle pright){
+		this.ball = ball;
+		this.pleft = pleft;
+		this.pright = pright;
+		this.score = scoreBoard;
+		Group root = new Group();
+		theScene = new Scene(root);
 
-	public static int getEdge() {
-		return EDGE;
+		Canvas canvas = new Canvas(WIDTH, HEIGHT);
+		root.getChildren().add(canvas);
+
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+
+
+		// Initial setup
+		setHandlers(theScene);
+
+
+		//animeringsloop(game loop)
+		KeyFrame kf = new KeyFrame(Duration.millis(1000 / FPS),
+				e -> {
+					// uppdatera position
+					update();
+					// rita bild
+					render(gc);
+				}
+				);
+		mainLoop = new Timeline(kf);
+		mainLoop.setCycleCount(Animation.INDEFINITE);
+		/*mainLoop.play();*/
+
 	}
 
 	void setHandlers(Scene scene)
@@ -73,7 +87,7 @@ public class Pong extends Application {
 					default:
 						break;
 					};
-					
+
 				}
 				);
 
@@ -128,8 +142,6 @@ public class Pong extends Application {
 			System.out.println("Playing sound 4");
 			soundEngine.playpSound4();
 		}
-
-
 	}
 
 
@@ -147,42 +159,32 @@ public class Pong extends Application {
 
 
 	//animering och events med initiering
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		launch(args);
+	}*/
+
+
+
+	// setters, getters
+	public Timeline getGameLoop(){
+		return mainLoop;
 	}
 
-	@Override
-	public void start(Stage theStage) {
-		theStage.setTitle(appName);
-
-		Group root = new Group();
-		Scene theScene = new Scene(root);
-		theStage.setScene(theScene);
-
-		Canvas canvas = new Canvas(WIDTH, HEIGHT);
-		root.getChildren().add(canvas);
-
-		GraphicsContext gc = canvas.getGraphicsContext2D();
-
-
-		// Initial setup
-		initialize();
-		setHandlers(theScene);
-
-
-		//animeringsloop(game loop)
-		KeyFrame kf = new KeyFrame(Duration.millis(1000 / FPS),
-				e -> {
-					// uppdatera position
-					update();
-					// rita bild
-					render(gc);
-				}
-				);
-		Timeline mainLoop = new Timeline(kf);
-		mainLoop.setCycleCount(Animation.INDEFINITE);
-		mainLoop.play();
-
-		theStage.show();
+	public Scene getScene(){
+		return theScene;
 	}
+
+	public static int getEdge() {
+		return EDGE;
+	}
+	public static int getWidth() {
+		return WIDTH;
+	}
+
+	public static int getHeight() {
+		return HEIGHT;
+	}
+
+
+
 }

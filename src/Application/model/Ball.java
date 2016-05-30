@@ -1,21 +1,21 @@
 package Application.model;
 
-import Application.view.Pong;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Ball {
 	int x, y; // center på boll
 	int vx,vy; // velocity vector
+	private final int WIDTH, HEIGHT;
 
-	private Pong pong;
 	private SoundEngine soundEngine;
 
 	final static int RADIUS = 12;
 
 
-	public Ball(Pong pong, SoundEngine soundEngine) {
-		this.pong = pong;
+	public Ball(int WIDTH, int HEIGHT, SoundEngine soundEngine) {
+		this.WIDTH = WIDTH;
+		this.HEIGHT = HEIGHT;
 		this.soundEngine = soundEngine;
 		reset();
 	}
@@ -28,8 +28,8 @@ public class Ball {
 
 	//Starta bollen i mitten och den skjuts höger eller vänster randomly
 	public void reset() {
-		x = pong.getWidth()/2;
-		y = pong.getHeight()/4;
+		x = WIDTH/2;
+		y = HEIGHT/4;
 		if (Math.random() < 0.5)
 			vx = -3;
 		else
@@ -60,7 +60,7 @@ public class Ball {
 		x += vx;
 		y += vy;
 		// Studsar mot långsidorna
-		if (y < RADIUS || y+RADIUS > pong.getHeight()){
+		if (y < RADIUS || y+RADIUS > HEIGHT){
 			vy = -vy;
 			soundEngine.playpSound2();
 			System.out.println("kolisionsdata top o botten med riktning: " + "x: " + x + "y: " + y + "vx: " + vx + "vy: " + vy);

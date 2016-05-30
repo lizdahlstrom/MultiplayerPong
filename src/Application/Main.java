@@ -1,5 +1,6 @@
 package Application;
 
+import Application.controller.GameController;
 import Application.controller.StartController;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -9,6 +10,7 @@ public class Main extends Application {
 
 	//Instance variables
 	private StartController sController;
+	private GameController gController;
 
 
 
@@ -20,8 +22,18 @@ public class Main extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		initComponents();
 		Scene startmenuScene = sController.getStartMenu().getScene();
-
+		Scene gameScene = gController.getPong().getScene();
 		primaryStage.setScene(startmenuScene);
+
+		//Start game
+		sController.getStartMenu().getBtnStart().setOnAction(event -> {
+			primaryStage.setScene(gameScene);
+			gController.getPong().getGameLoop().play();
+
+		});
+
+
+
 
 		primaryStage.show();
 
@@ -31,10 +43,10 @@ public class Main extends Application {
 	public void initComponents(){
 		//		mainController = new MainController();
 		sController = new StartController();
+		gController = new GameController();
 	}
 
 	public void setView(){
 
 	}
-
 }

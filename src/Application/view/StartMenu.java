@@ -178,6 +178,10 @@ public class StartMenu {
 		return btnEnterName2;
 	}
 
+	public Button getBtnStart() {
+		return btnStart;
+	}
+
 	public TextArea getTxtArea() {
 		return txtArea;
 	}
