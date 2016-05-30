@@ -9,11 +9,10 @@ public class StartModel {
 	private String testStr = "Hej";
 	// TODO: Highscore implementation
 	// private Highscore hs;
+	
 	//Constructor
 	public StartModel(){
 		clientReceive = new ClientReceive();
-
-
 	}
 
 
