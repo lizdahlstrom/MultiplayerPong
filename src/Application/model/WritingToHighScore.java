@@ -7,7 +7,6 @@ import java.io.IOException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-
 /*
  *  WRITE TO FILE.
  *  hsObject stands for HighScoreObject.
@@ -48,7 +47,7 @@ public class WritingToHighScore {
 			fileWriter.write(hsObject.toJSONString());
 			fileWriter.flush();
 			fileWriter.close();
-		}catch (IOException e) {
+			}catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

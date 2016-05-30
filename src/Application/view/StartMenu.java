@@ -117,17 +117,6 @@ public class StartMenu {
 				getTxtYourName().getText()));
 
 
-		//Action events are generated when OK is pressed.
-		/*		btnEnterName2.setOnAction(eventOK -> {
-			if (eventOK.getSource()==btnEnterName2 && getTxtYourName().getText()!="")
-				newStage.close();
-			txtArea.setText("Player:"+ " " + getTxtYourName().getText()+" " + " " + "Status:" + " " 
-
-					);			
-		} 	
-				);*/    
-
-
 		//Add the Start button.
 		btnStart = new Button("START GAME");
 		btnStart.setId("btnStartId");

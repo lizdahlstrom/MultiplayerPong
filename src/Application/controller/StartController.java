@@ -1,12 +1,14 @@
 package Application.controller;
 
 import Application.model.StartModel;
+import Application.model.WritingToHighScore;
 import Application.view.StartMenu;
 
 public class StartController {
 	//Instance variables
 	private StartModel startModel;
 	private StartMenu startView;
+	private WritingToHighScore writingToHighScore;
 
 	// Controller
 	public StartController(){
@@ -28,6 +30,7 @@ public class StartController {
 	private void initComponents(){
 		startModel = new StartModel();
 		startView = new StartMenu();
+		writingToHighScore = new WritingToHighScore();
 	}
 
 
@@ -48,6 +51,10 @@ public class StartController {
 
 	public void setStartMenu(StartMenu startMenu) {
 		this.startView = startMenu;
+	}
+	
+	public  WritingToHighScore getWritingToHighScore() {
+		return writingToHighScore;
 	}
 
 
