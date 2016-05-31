@@ -22,7 +22,7 @@ public class StartController {
 				startView.getNewStage().close();
 			startView.getTxtArea().setText("Player:"+ " " + startView.getTxtYourName().getText()+" " + " " + "Status:" + " " 
 					+ startModel.getClientReceive().setStrData());
-			//startView.getTable().setText(readingToHighScore.gethashMapIterator());
+			//startView.getTable().setItem(getReadingToHighScore().getHashMapIterator());
 		});
 
 		startView.getTxtArea().setText(startModel.getTestStr());

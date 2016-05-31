@@ -87,7 +87,6 @@ public class StartMenu {
 		btnEnterName.setLayoutX(442);
 		btnEnterName.setLayoutY(290);
 
-
 		//Handle the action events for the btnEnterName and btnEnterName2.
 		btnEnterName.setOnAction(ae -> {
 			if (ae.getSource()==btnEnterName)

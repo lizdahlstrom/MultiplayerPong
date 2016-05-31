@@ -20,7 +20,7 @@ public class ReadingToHighScore {
 
 	static HashMap<Integer,String> hashMapIterator;
 	
-	public static void main(String[]args) {
+	public static void hashHighScore() {
 		
 		
 		try {
@@ -56,4 +56,8 @@ public class ReadingToHighScore {
 			e.printStackTrace();
 		}
 		}
+	public HashMap getHashMapIterator(){
+		hashMapIterator.forEach((key, value) -> System.out.println(key + "+" +value));
+		return hashMapIterator;
+	}
 }
