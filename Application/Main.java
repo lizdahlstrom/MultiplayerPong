@@ -1,5 +1,8 @@
 package Application;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
+
 import Application.controller.GameController;
 import Application.controller.StartController;
 import javafx.application.Application;
@@ -12,10 +15,12 @@ public class Main extends Application {
 	private StartController sController;
 	private GameController gController;
 	private Client client;
+	private Thread connThread;
 
 
 
 	public static void main(String[] args) {
+		System.out.println("launching app");
 		launch(args);
 	}
 
@@ -50,10 +55,13 @@ public class Main extends Application {
 	}
 
 	//METHODS
-	public void initComponents(){
+	public void initComponents() throws UnknownHostException, IOException{
 		//		mainController = new MainController();
+		client = new Client();
+		connThread = new Thread(client);
+		connThread.start();
 		sController = new StartController();
-		gController = new GameController(new Client());
+		gController = new GameController(client);
 	}
 
 	public void setView(){

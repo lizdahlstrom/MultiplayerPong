@@ -23,6 +23,8 @@ public class Client implements Runnable {
 	private DataInputStream dis;
 	private ByteArrayInputStream bis;
 
+	private boolean isReady = false;
+
 
 
 
@@ -47,10 +49,18 @@ public class Client implements Runnable {
 	}
 
 	private void handshake(){
-		String data = "0";
-		data.getBytes();
-		byte [] buf = new byte [1024];
-		packet = new DatagramPacket(buf, buf.length, address, port);
+
+
+
+		/*String data = "0";
+		byte[] buf = new byte [1024];
+		try {
+			buf = data.getBytes("UTF-8");
+			packet = new DatagramPacket(buf, buf.length, address, port);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}*/
+
 	}
 
 	private void Player(){
@@ -61,10 +71,19 @@ public class Client implements Runnable {
 
 	}
 
+	public boolean checkIfReady(){
+		// TODO: Check if two players are populating server, in that case set isready to true
+		return isReady;
+
+	}
+
+	// RUN METHOD
 	@Override
 	public void run() {
+		System.out.println("Running client service...");
+		while (true) {
 
-
+		}
 
 	}
 

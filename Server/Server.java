@@ -9,7 +9,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import Application.packet.BallPacket;
 import Application.packet.PlayerPacket;
 import Server.GameStates.GameState;
 
@@ -45,7 +44,7 @@ public class Server extends Connection {
 				System.out.println("waiting for incoming data...");
 				socket.receive(packet); // retrieving a packet
 				// Get the data from packet
-				if(getPacketData(packet).getClass() == PlayerPacket.class){ // if it's a playerpacket
+				/*if(getPacketData(packet).getClass() == PlayerPacket.class){ // if it's a playerpacket
 					for(Object user: users){
 						user = getPacketData(packet);
 					}
@@ -87,7 +86,7 @@ public class Server extends Connection {
 				default:
 					break;
 				};
-
+				 */
 
 
 

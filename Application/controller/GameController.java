@@ -29,7 +29,6 @@ public class GameController {
 	//Constructor
 	public GameController(Client connection){
 		this.connection = connection;
-		connection.run();
 		scoreBoard = new ScoreBoard(WIDTH, EDGE);
 		gameModel = new GameModel(scoreBoard);
 		initComponents();
@@ -48,7 +47,6 @@ public class GameController {
 		//TODO: Wait for other player to be ready
 		// if other player is ready then play
 		// update label in startmenu
-		// 
 
 		isReady = true;
 		gameView.getGameLoop().play();
