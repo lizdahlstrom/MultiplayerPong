@@ -5,14 +5,12 @@ import Application.model.GameModel;
 import Application.model.Paddle;
 import Application.model.ScoreBoard;
 import Application.view.Pong;
-import server.Client;
 
 public class GameController {
 
 	//Instance variables
 	private GameModel gameModel;
 	private Pong gameView;
-	private Client client;
 	private boolean isPlaying = false;
 	private boolean isReady = false;
 
@@ -43,7 +41,9 @@ public class GameController {
 	public void startGame(){
 
 		//TODO: Wait for other player to be ready
+		// if other player is ready then play
 		// update label in startmenu
+		// 
 
 		isReady = true;
 		gameView.getGameLoop().play();

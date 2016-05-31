@@ -1,4 +1,4 @@
-package server;
+package Server;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,9 +9,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import server.GameStates.GameState;
-import server.packet.BallPacket;
-import server.packet.PlayerPacket;
+import Application.packet.BallPacket;
+import Application.packet.PlayerPacket;
+import Server.GameStates.GameState;
 
 public class Server extends Connection {
 

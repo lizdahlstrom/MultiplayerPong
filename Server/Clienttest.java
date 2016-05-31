@@ -1,4 +1,4 @@
-package server;
+package Server;
 
 public class Clienttest {
 
@@ -13,7 +13,7 @@ public class Clienttest {
 		// Testing ...
 		PlayerModel playerModel = new PlayerModel(address, port, playerStartX, playerStartY);
 
-		Client client = new Client(playerModel);
+		//		Client client = new Client(playerModel);
 
 	}
 }

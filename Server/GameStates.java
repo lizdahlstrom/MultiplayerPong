@@ -1,4 +1,4 @@
-package server;
+package Server;
 
 public class GameStates {
 	//Instance variables -- static for global use
