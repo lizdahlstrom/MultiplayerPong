@@ -39,6 +39,8 @@ public class Server extends Connection {
 
 		while (true) {
 			try {
+
+
 				// Waiting for connection..
 				System.out.println("waiting for incoming data...");
 				socket.receive(packet); // retrieving a packet

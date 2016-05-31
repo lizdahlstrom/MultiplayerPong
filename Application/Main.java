@@ -11,6 +11,7 @@ public class Main extends Application {
 	//Instance variables
 	private StartController sController;
 	private GameController gController;
+	private Client client;
 
 
 
@@ -52,7 +53,7 @@ public class Main extends Application {
 	public void initComponents(){
 		//		mainController = new MainController();
 		sController = new StartController();
-		gController = new GameController();
+		gController = new GameController(new Client());
 	}
 
 	public void setView(){

@@ -1,5 +1,6 @@
 package Application.controller;
 
+import Application.Client;
 import Application.model.Ball;
 import Application.model.GameModel;
 import Application.model.Paddle;
@@ -23,8 +24,12 @@ public class GameController {
 	private final int HEIGHT = 600;
 	private final int EDGE = 30;
 
+	private Client connection;
+
 	//Constructor
-	public GameController(){
+	public GameController(Client connection){
+		this.connection = connection;
+		connection.run();
 		scoreBoard = new ScoreBoard(WIDTH, EDGE);
 		gameModel = new GameModel(scoreBoard);
 		initComponents();
