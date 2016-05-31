@@ -27,10 +27,19 @@ public class Main extends Application {
 
 		//Start game
 		sController.getStartMenu().getBtnStart().setOnAction(event -> {
+
+
 			primaryStage.setScene(gameScene);
-			gController.getPong().getGameLoop().play();
+			if(gController.isPlaying()){
+				gController.stopGame();
+			}
+			gController.startGame();
+
+
 
 		});
+
+		// TODO: display endview when game is done
 
 
 
