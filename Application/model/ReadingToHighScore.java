@@ -1,5 +1,9 @@
 package Application.model;
 
+/*
+ * SKAPA EN HASHMAP AV 
+ */
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
