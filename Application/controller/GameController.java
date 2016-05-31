@@ -5,7 +5,7 @@ import Application.model.GameModel;
 import Application.model.Paddle;
 import Application.model.ScoreBoard;
 import Application.view.Pong;
-import server.Client;
+import Server.Client;
 
 public class GameController {
 
