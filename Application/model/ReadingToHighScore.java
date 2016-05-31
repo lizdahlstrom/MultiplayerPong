@@ -18,7 +18,7 @@ public class ReadingToHighScore {
 	
 	static JSONParser parser;
 
-	HashMap<Integer,String> hashMapIterator;
+	static HashMap<Integer,String> hashMapIterator;
 	
 	public static void main(String[]args) {
 		
@@ -34,13 +34,19 @@ public class ReadingToHighScore {
 			long rank = (Long) jsonObject.get("Rank");
 			
 			
-			
+			hashMapIterator = new HashMap<Integer, String>();
 			System.out.println("The Top 10 are:");
 			JSONArray listOfHighScores = (JSONArray) jsonObject.get("Top ten");
 			Iterator<String> iterator = listOfHighScores.iterator();
+			int counter = 1;
 			while (iterator.hasNext()) {
-				System.out.println(iterator.next());
+//				System.out.println(iterator.next());
+				hashMapIterator.put(counter, iterator.next());
+				counter++;
 			}
+			
+			//looping through hashmap content
+			hashMapIterator.forEach((key, value) -> System.out.println(key + "+" +value));
 				
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
