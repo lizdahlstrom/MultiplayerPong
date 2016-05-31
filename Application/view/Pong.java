@@ -32,7 +32,6 @@ public class Pong {
 	private Paddle pleft, pright;
 	private ScoreBoard score;
 
-	//SoundEngine pSound0, pSound1, pSound2, pSound3, pSound4, pSound5;
 
 	SoundEngine soundEngine = new SoundEngine();
 
@@ -62,11 +61,11 @@ public class Pong {
 					update();
 					// rita bild
 					render(gc);
+
 				}
 				);
 		mainLoop = new Timeline(kf);
 		mainLoop.setCycleCount(Animation.INDEFINITE);
-		/*mainLoop.play();*/
 
 	}
 
@@ -109,7 +108,6 @@ public class Pong {
 				}
 				);
 	}
-
 
 	//Uppdatera variabler för varje steg
 	public void update()

@@ -13,6 +13,8 @@ public class GameController {
 	private GameModel gameModel;
 	private Pong gameView;
 	private Client client;
+	private boolean isPlaying = false;
+	private boolean isReady = false;
 
 	private Paddle p1, p2;
 	private Ball ball;
@@ -38,13 +40,34 @@ public class GameController {
 		ball = new Ball(WIDTH, HEIGHT, gameModel.getSoundEngine());
 	}
 
+	public void startGame(){
+
+		//TODO: Wait for other player to be ready
+		// update label in startmenu
+
+		isReady = true;
+		gameView.getGameLoop().play();
+	}
+
+	public void stopGame(){
+		isPlaying = false;
+		isReady = false;
+		gameView.getGameLoop().stop();
+	}
+
 	//Setters, getters
 	public GameModel getGameModel() {
 		return gameModel;
 	}
 
+
+
 	public Pong getPong() {
 		return gameView;
 	}
 
+	public boolean isPlaying(){
+		return isPlaying;
+	}
 }
+
