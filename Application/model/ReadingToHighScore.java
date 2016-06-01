@@ -7,6 +7,8 @@ package Application.model;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import org.json.simple.JSONArray;
@@ -19,6 +21,8 @@ public class ReadingToHighScore {
 	static JSONParser parser;
 
 	static HashMap<Integer,String> hashMapHighScore;
+	
+	static ArrayList<String> poang;
 	
 	public static void hashHighScore() {
 				
@@ -36,12 +40,24 @@ public class ReadingToHighScore {
 			hashMapHighScore = new HashMap<Integer, String>();
 			System.out.println("The Top 10 are:");
 			JSONArray listOfHighScores = (JSONArray) jsonObject.get("Top ten");
+			JSONArray listOfPoang = (JSONArray) jsonObject.get("Points");
+			
+			poang = new ArrayList<>();
+			
+			
+			
 			Iterator<String> iterator = listOfHighScores.iterator();
+			Iterator<String> iteratorScore = listOfHighScores.iterator();
+
 			int counter = 1;
 			while (iterator.hasNext()) {
 //				System.out.println(iterator.next());
 				hashMapHighScore.put(counter, iterator.next());
+//				System.out.println(listOfPoang.get(counter));
+				poang.add((String) iteratorScore.next());
 				counter++;
+				//System.out.println("asd: "+hashMapHighScore.get(counter));
+				
 			}
 			
 			//looping through hashmap content
@@ -57,6 +73,15 @@ public class ReadingToHighScore {
 		}
 	public HashMap getHashMapHighScore(){
 		//hashMapIterator.forEach((key, value) -> System.out.println(key + "+" +value));
+		
 		return hashMapHighScore;
+	}
+	
+	public ArrayList getPoang() {
+		return poang;
+	}
+	
+	public void updateHighScore(){
+		hashHighScore();
 	}
 }

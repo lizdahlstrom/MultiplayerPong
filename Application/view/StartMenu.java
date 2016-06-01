@@ -68,11 +68,11 @@ public class StartMenu {
 		playerCol.setId("playerCol");
 		
 		
-		rankCol.setCellValueFactory(new MapValueFactory(StartController.Column1MapKey));
+		rankCol.setCellValueFactory(new MapValueFactory(StartController.Column1Rank));
 		rankCol.setMinWidth(100);
-		scoreCol.setCellValueFactory(new MapValueFactory(StartController.Column2MapKey));
+		scoreCol.setCellValueFactory(new MapValueFactory(StartController.Column2Score));
 		scoreCol.setMinWidth(100);
-		playerCol.setCellValueFactory(new MapValueFactory(StartController.Column3MapKey));
+		playerCol.setCellValueFactory(new MapValueFactory(StartController.Column3Player));
 		playerCol.setMinWidth(100);
 		
 		table = new TableView<>();

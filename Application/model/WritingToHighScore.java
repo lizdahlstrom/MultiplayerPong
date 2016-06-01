@@ -21,7 +21,7 @@ public class WritingToHighScore {
 		hsObject.put("HighScore","Players");
 		hsObject.put("Rank", new Integer(10));
 		
-		JSONArray listOfHighScores = new JSONArray();
+		JSONArray listOfHighScores = new JSONArray();		
 		listOfHighScores.add("Obama");
 		listOfHighScores.add("Mother Theresa");
 		listOfHighScores.add("Butros Butros");
@@ -33,7 +33,22 @@ public class WritingToHighScore {
 		listOfHighScores.add("Jeanne D'arce");
 		listOfHighScores.add("Marie Curie");
 		
+		JSONArray listOfPoang = new JSONArray();
+		listOfPoang.add(100);
+		listOfPoang.add(98);
+		listOfPoang.add(91);
+		listOfPoang.add(85);
+		listOfPoang.add(84);
+		listOfPoang.add(80);
+		listOfPoang.add(73);
+		listOfPoang.add(66);
+		listOfPoang.add(62);
+		listOfPoang.add(50);
+		
+		
+		
 		hsObject.put("Top ten", listOfHighScores);
+		hsObject.put("Points", listOfPoang);
 		
 		try {
 			//Writing to a file.

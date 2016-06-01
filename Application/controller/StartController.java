@@ -1,5 +1,6 @@
 package Application.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,9 +22,9 @@ public class StartController {
 	//private WritingToHighScore writingToHighScore;
 	private ReadingToHighScore readingToHighScore;
 	
-	public static final String Column1MapKey = "Rank";
-	public static final String Column2MapKey = "Score";
-	public static final String Column3MapKey = "Player";
+	public static final String Column1Rank = "Rank";
+	public static final String Column2Score = "Score";
+	public static final String Column3Player = "Player";
 
 	// Controller
 	public StartController(){
@@ -80,27 +81,29 @@ public class StartController {
 ////This method incorporates highscores and Top ten data generated from the ReadingToHighScore class.
 	//as a result the data will be displayed in the HighScore Billboard in GUI.
 	private void generateDataInMap() {
-        
+        readingToHighScore.updateHighScore();
         HashMap highScoreList = readingToHighScore.getHashMapHighScore();
+        
+        ArrayList poangList = readingToHighScore.getPoang();
         
         
         ObservableList<Map> allData = FXCollections.observableArrayList();
         
-        HashMap<String, String> dataRow = new HashMap<>();
-        for (int i = 1; i < highScoreList.size(); i++) {
-            
-//            String value1 = "Rank" + i;
-//            String value2 = "Score" + i;
-//            String value3 = "Player" +i;
- 
-            
-            
-            dataRow.put(Column1MapKey, (String) highScoreList.get(1));
-            dataRow.put(Column2MapKey, (String) highScoreList.get(2));
-            dataRow.put(Column3MapKey, (String) highScoreList.get(3));
+
+        System.out.println("highscore storlek:"+highScoreList.size());
+        for (int i = 1; i <= highScoreList.size(); i++) {
+
+        	HashMap<String, String> dataRow = new HashMap<>();    
+    
+            dataRow.put(Column1Rank, ""+ i);
+            dataRow.put(Column2Score, (String) poangList.get(i));
+            dataRow.put(Column3Player, (String) highScoreList.get(i));
  			
             allData.add(dataRow); 
         }
-        startView.getTable().setItems(allData);        
+        readingToHighScore.getHashMapHighScore().forEach((key, value) -> System.out.println(key + "+" +value));
+        startView.getTable().setItems(allData);  
+        
     }
+	
 }
