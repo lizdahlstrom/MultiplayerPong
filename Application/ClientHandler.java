@@ -18,17 +18,18 @@ public class ClientHandler implements Runnable{
 
 	}
 
+
 	@Override
 	public void run() {
 
-		//		try {
-		//			os = new DataOutputStream(socket.getOutputStream());
-		//			br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-		//			String strIndata = br.readLine();
-		//			System.out.println(strIndata);
-		/*} catch (IOException e) {
-			e.printStackTrace();
-		}*/
+//				try {
+//					os = new DataOutputStream(socket.getOutputStream());
+//					br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//					String strIndata = br.readLine();
+//					System.out.println(strIndata);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+		
 
 	}
 
