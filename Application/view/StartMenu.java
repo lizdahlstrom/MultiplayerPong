@@ -1,5 +1,9 @@
 package Application.view;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import Application.controller.StartController;
 import Application.model.Users;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.MapValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -22,7 +27,7 @@ import javafx.stage.Stage;
 public class StartMenu {
 
 	//Instance variables
-	private final TableView table; // = new TableView(); //Table shows the past scores.
+	private final TableView table; // The Billboard displaying the HighScore
 	private Text txtPong;  //The text label of Pong.
 	private TextArea txtArea; //Text area displaying the status of players logging in to play.
 	private Button btnEnterName;
@@ -34,9 +39,8 @@ public class StartMenu {
 	private Scene scene2;
 	private Stage newStage;
 	private TextField txtYourName;
-
-
-
+	
+	
 	public StartMenu() {
 
 		Group root = new Group();
@@ -49,25 +53,35 @@ public class StartMenu {
 		final VBox vbox = new VBox(5); //Space between child nodes only
 		vbox.setPadding(new Insets(10, 0, 0, 10)); //Padding between vbox border and child node
 
-		TableColumn rankCol = new TableColumn("RANK");
+		//HighScore billboard: Column Rank.
+		TableColumn<Map, String> rankCol = new TableColumn("RANK");
 		rankCol.getStyleClass().add("tableCol");
 		rankCol.setId("rankCol");
 
-		TableColumn scoreCol = new TableColumn("SCORE");
+		//HighScore billboard: Column Score.
+		TableColumn<Map, String> scoreCol = new TableColumn("SCORE");
 		scoreCol.getStyleClass().add("tableCol");
 		scoreCol.setId("scoreCol");
 
-		TableColumn playerCol = new TableColumn("PLAYER");
+		//HighScore billboard: Column Player.	
+		TableColumn<Map, String> playerCol = new TableColumn("PLAYER");
 		playerCol.getStyleClass().add("tableCol");
 		playerCol.setId("playerCol");
-
-		/*
-		//Show the players' names, scores, ranking.
-		TableView<Users> table = new TableView<Users>();
-		final ObservableList<Users> data =
-				FXCollections.observableArrayList(
-						);
-		*/
+		
+		
+		rankCol.setCellValueFactory(new MapValueFactory(StartController.Column1MapKey));
+		rankCol.setMinWidth(100);
+		scoreCol.setCellValueFactory(new MapValueFactory(StartController.Column2MapKey));
+		scoreCol.setMinWidth(100);
+		playerCol.setCellValueFactory(new MapValueFactory(StartController.Column3MapKey));
+		playerCol.setMinWidth(100);
+		table = new TableView<>();
+		//The HighScore Billboard itself.
+//		table = new TableView<>(generateDataInMap());
+		
+		table.getColumns().addAll(rankCol, scoreCol, playerCol);
+		 
+		
 
 		//Add the label Pong with CSS tag.
 		txtPong = new Text(475,85, "PONG");
@@ -128,14 +142,15 @@ public class StartMenu {
 		//initialises the game. 
 		btnStart.setOnAction(event -> {
 			// TODO Auto-generated method stub
+		});
 
-		}
-				);
-
+		/*
 		//table.setItems(data);
 		table = new TableView();
 		table.getColumns().addAll(rankCol, scoreCol, playerCol);
-
+		*/
+		
+		//table.getColumns().addAll(rankCol, scoreCol, playerCol);
 		vbox.getChildren().addAll(table);
 		root.getChildren().addAll(txtPong,txtArea,btnEnterName,btnStart);
 
@@ -148,6 +163,9 @@ public class StartMenu {
 	
 
 	// Setters, getters
+
+	
+
 
 	public Scene getScene(){
 		return menuScene;

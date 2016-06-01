@@ -18,11 +18,10 @@ public class ReadingToHighScore {
 	
 	static JSONParser parser;
 
-	static HashMap<Integer,String> hashMapIterator;
+	static HashMap<Integer,String> hashMapHighScore;
 	
 	public static void hashHighScore() {
-		
-		
+				
 		try {
 			parser = new JSONParser();
 			Object obj = parser.parse(new FileReader("C:\\GamePong2016/MultiPlayerPong/highScoreData.json"));
@@ -34,19 +33,19 @@ public class ReadingToHighScore {
 			long rank = (Long) jsonObject.get("Rank");
 			
 			
-			hashMapIterator = new HashMap<Integer, String>();
+			hashMapHighScore = new HashMap<Integer, String>();
 			System.out.println("The Top 10 are:");
 			JSONArray listOfHighScores = (JSONArray) jsonObject.get("Top ten");
 			Iterator<String> iterator = listOfHighScores.iterator();
 			int counter = 1;
 			while (iterator.hasNext()) {
 //				System.out.println(iterator.next());
-				hashMapIterator.put(counter, iterator.next());
+				hashMapHighScore.put(counter, iterator.next());
 				counter++;
 			}
 			
 			//looping through hashmap content
-			hashMapIterator.forEach((key, value) -> System.out.println(key + "+" +value));
+			hashMapHighScore.forEach((key, value) -> System.out.println(key + "+" +value));
 				
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -56,8 +55,8 @@ public class ReadingToHighScore {
 			e.printStackTrace();
 		}
 		}
-	public HashMap getHashMapIterator(){
-		hashMapIterator.forEach((key, value) -> System.out.println(key + "+" +value));
-		return hashMapIterator;
+	public HashMap getHashMapHighScore(){
+		//hashMapIterator.forEach((key, value) -> System.out.println(key + "+" +value));
+		return hashMapHighScore;
 	}
 }
