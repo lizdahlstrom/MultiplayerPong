@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Application.controller.StartController;
-import Application.model.Users;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -75,6 +74,7 @@ public class StartMenu {
 		scoreCol.setMinWidth(100);
 		playerCol.setCellValueFactory(new MapValueFactory(StartController.Column3MapKey));
 		playerCol.setMinWidth(100);
+		
 		table = new TableView<>();
 		//The HighScore Billboard itself.
 //		table = new TableView<>(generateDataInMap());

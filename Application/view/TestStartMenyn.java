@@ -4,7 +4,7 @@ package Application.view;
  * The MainController / Client sockets have to read from Servers with Sockets?
  */
 
-import Application.model.Users;
+
 import javafx.application.Application; 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -88,12 +88,13 @@ public class TestStartMenyn extends Application {
 		TableColumn playerCol = new TableColumn("PLAYER");
 		playerCol.getStyleClass().add("tableCol");
 		playerCol.setId("playerCol");
-				
+		
+		/*
 		//Show the players' names, scores, ranking.
 		TableView<Users> table = new TableView<Users>();
 	    final ObservableList<Users> data =
 	        FXCollections.observableArrayList(
-	        );
+	        );*/
 					
 		//Add the label Pong with CSS tag.
 		txtPong = new Text(475,85, "PONG");
@@ -176,7 +177,7 @@ public class TestStartMenyn extends Application {
 			
 		}
 				);
-		
+		/*
 		table.setItems(data);
 		table.getColumns().addAll(rankCol, scoreCol, playerCol);
 					
@@ -192,7 +193,7 @@ public class TestStartMenyn extends Application {
 	        primaryStage.setScene(myScene);
 	        primaryStage.show();
 
-	       
+	       */
 			
 	}
 

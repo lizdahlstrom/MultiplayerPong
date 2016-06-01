@@ -3,6 +3,7 @@ package Application.controller;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import Application.model.ReadingToHighScore;
 import Application.model.StartModel;
@@ -34,7 +35,7 @@ public class StartController {
 				startView.getNewStage().close();
 			startView.getTxtArea().setText("Player:"+ " " + startView.getTxtYourName().getText()+" " + " " + "Status:" + " " 
 					+ startModel.getClientReceive().setStrData());
-			//startView.getTable()).setItems(generateDataInMap());
+			generateDataInMap();
 		});
 
 		startView.getTxtArea().setText(startModel.getTestStr());
@@ -85,19 +86,20 @@ public class StartController {
         
         ObservableList<Map> allData = FXCollections.observableArrayList();
         
-        
+        HashMap<String, String> dataRow = new HashMap<>();
         for (int i = 1; i < highScoreList.size(); i++) {
-            Map<String, String> dataRow = new HashMap<>();
- 
+            
 //            String value1 = "Rank" + i;
 //            String value2 = "Score" + i;
 //            String value3 = "Player" +i;
  
+            
+            
             dataRow.put(Column1MapKey, (String) highScoreList.get(1));
             dataRow.put(Column2MapKey, (String) highScoreList.get(2));
             dataRow.put(Column3MapKey, (String) highScoreList.get(3));
- 
-            allData.add(dataRow);
+ 			
+            allData.add(dataRow); 
         }
         startView.getTable().setItems(allData);        
     }
