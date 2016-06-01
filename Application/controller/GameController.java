@@ -1,3 +1,5 @@
+//Class for adding components start and stop methods for the client.
+
 package Application.controller;
 
 import Application.Client;

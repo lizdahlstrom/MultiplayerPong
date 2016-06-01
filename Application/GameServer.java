@@ -1,3 +1,6 @@
+//Server creating logic for client connection.
+
+
 package Application;
 import java.io.DataOutputStream;
 import java.io.IOException;

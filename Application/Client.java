@@ -1,3 +1,6 @@
+//Connect client to server. 
+
+
 package Application;
 
 import java.io.ByteArrayInputStream;

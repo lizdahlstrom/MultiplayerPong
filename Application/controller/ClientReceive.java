@@ -1,3 +1,6 @@
+//Will not be used in the final application, will be merged with Client class.
+
+
 package Application.controller;
 
 import java.io.IOException;

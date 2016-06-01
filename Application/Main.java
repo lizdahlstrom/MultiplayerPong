@@ -1,3 +1,6 @@
+//This class runs the client application.
+
+
 package Application;
 
 import java.io.IOException;

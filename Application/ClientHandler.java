@@ -1,3 +1,6 @@
+//Handler for communication from client to server.
+
+
 package Application;
 
 import java.io.BufferedReader;
