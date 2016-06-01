@@ -1,3 +1,5 @@
+//For development only.
+
 package Server;
 
 public class GameStates {

@@ -1,3 +1,5 @@
+//For test only will not be included in the final application
+
 package Server;
 
 public class Connection {

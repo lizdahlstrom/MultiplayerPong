@@ -1,3 +1,6 @@
+//Creates the score board and increments of points.
+
+
 package Application.model;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -7,8 +10,8 @@ import javafx.scene.text.FontWeight;
 
 public class ScoreBoard {
 
-	int left = 0;  // poäng för spelare vänster
-	int right = 0; // poäng för spelare höger
+	int left = 0;  // Left player score
+	int right = 0; // Right player score
 
 	Font font;
 	private final int WIDTH;

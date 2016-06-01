@@ -76,7 +76,8 @@ public class StartController {
 	}
 	
 	
-////Tsiewing 160601
+////This method incorporates highscores and Top ten data generated from the ReadingToHighScore class.
+	//as a result the data will be displayed in the HighScore Billboard in GUI.
 	private void generateDataInMap() {
         
         HashMap highScoreList = readingToHighScore.getHashMapHighScore();

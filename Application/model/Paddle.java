@@ -1,3 +1,6 @@
+//Creates the paddle and position
+
+
 package Application.model;
 
 import Application.view.Pong;
@@ -5,7 +8,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Paddle {
-	int x, y; // top-vänster hörn
+	int x, y;
 
 	boolean upKey = false, downKey = false;
 
@@ -15,7 +18,7 @@ public class Paddle {
 
 	private Pong pong;
 
-	// Sätt x1 mitten av padd
+	// x1 center of the paddle
 	public Paddle(int x1, Pong pong){
 		this.pong = pong;
 		x = x1 - WIDTH/2;

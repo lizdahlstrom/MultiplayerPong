@@ -1,3 +1,5 @@
+//Creates player packet model
+
 package Application.packet;
 
 import java.io.Serializable;

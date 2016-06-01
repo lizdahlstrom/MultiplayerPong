@@ -1,10 +1,13 @@
+//Class that creates the ball and handle collision on the roof and the bottom.
+
+
 package Application.model;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Ball {
-	int x, y; // center på boll
+	int x, y; // center of the ball
 	int vx,vy; // velocity vector
 	private final int WIDTH, HEIGHT;
 
@@ -26,7 +29,7 @@ public class Ball {
 	}
 
 
-	//Starta bollen i mitten och den skjuts höger eller vänster randomly
+	//Starts the ball in the middle and fire it to the right or left randomly
 	public void reset() {
 		x = WIDTH/2;
 		y = HEIGHT/4;
@@ -50,7 +53,8 @@ public class Ball {
 		if ((y < py1)||(y > py2))
 			return;
 
-		// omvänd riktning
+		
+		//Change of direction
 		soundEngine.playpSound1();
 		vx = -vx;
 		System.out.println("PADkolision: " + py1 + "Vad är py2: " + py2);
@@ -59,7 +63,7 @@ public class Ball {
 	public void move() {
 		x += vx;
 		y += vy;
-		// Studsar mot långsidorna
+		// Bounces on top and bottom wall
 		if (y < RADIUS || y+RADIUS > HEIGHT){
 			vy = -vy;
 			soundEngine.playpSound2();
