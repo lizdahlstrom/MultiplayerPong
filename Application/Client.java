@@ -7,14 +7,18 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
 public class Client implements Runnable {
 	//Instance variables
+	
+	//private GameClient gc;
 	private final static String host = "localhost";
 	private InetAddress address;
 	private final static int port = 7777;
@@ -40,15 +44,26 @@ public class Client implements Runnable {
 
 	// Methods
 	private void connect(){
+		
+		
+		
 		try {
-			address = InetAddress.getByName(host);
+//		address = InetAddress.getByName(host);
 			socket = new DatagramSocket(port);
-
+//
+		//socket = new Socket(host, port);
+        //System.out.println("You connected to: "+ host);
+		
+        //GameClient = new GameClient(sock);
+        
 			System.out.println("Found host..");
-		} catch (SocketException | UnknownHostException e) {
+		} catch (SocketException e) {
 			System.out.println("Cannot find host..");
 			e.printStackTrace();
 		}
+		
+
+		
 	}
 
 	private void handshake(){
