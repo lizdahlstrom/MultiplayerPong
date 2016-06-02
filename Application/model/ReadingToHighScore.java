@@ -24,6 +24,7 @@ public class ReadingToHighScore {
 	
 	static ArrayList<String> poang;
 	
+	
 	public static void hashHighScore() {
 				
 		try {
@@ -46,15 +47,20 @@ public class ReadingToHighScore {
 			
 			
 			
+			
 			Iterator<String> iterator = listOfHighScores.iterator();
-			Iterator<String> iteratorScore = listOfHighScores.iterator();
+			Iterator<String> iteratorScore = listOfPoang.iterator();
 
+//			while(iteratorScore.hasNext()){
+//				System.out.println(String.valueOf(iteratorScore.next()));
+//			}
+			
 			int counter = 1;
 			while (iterator.hasNext()) {
 //				System.out.println(iterator.next());
 				hashMapHighScore.put(counter, iterator.next());
 //				System.out.println(listOfPoang.get(counter));
-				poang.add((String) iteratorScore.next());
+				poang.add(String.valueOf(iteratorScore.next()));
 				counter++;
 				//System.out.println("asd: "+hashMapHighScore.get(counter));
 				

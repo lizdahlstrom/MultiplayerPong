@@ -14,10 +14,11 @@ import org.json.simple.JSONObject;
 
 public class WritingToHighScore {
 	
-	static JSONObject hsObject; 
+
 	
-	public static void main(String[]args) {
-		hsObject = new JSONObject();
+	public static void generateFile() { 
+		
+		JSONObject hsObject = new JSONObject();
 		hsObject.put("HighScore","Players");
 		hsObject.put("Rank", new Integer(10));
 		
@@ -67,10 +68,6 @@ public class WritingToHighScore {
 			}catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public JSONObject gethsObject() {
-		return hsObject;
 	}
 }
 

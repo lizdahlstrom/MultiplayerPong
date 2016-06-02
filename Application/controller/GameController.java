@@ -65,8 +65,6 @@ public class GameController {
 		return gameModel;
 	}
 
-
-
 	public Pong getPong() {
 		return gameView;
 	}

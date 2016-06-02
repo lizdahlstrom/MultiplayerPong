@@ -25,7 +25,7 @@ public class StartController {
 	public static final String Column1Rank = "Rank";
 	public static final String Column2Score = "Score";
 	public static final String Column3Player = "Player";
-
+	
 	// Controller
 	public StartController(){
 		initComponents();
@@ -36,6 +36,9 @@ public class StartController {
 				startView.getNewStage().close();
 			startView.getTxtArea().setText("Player:"+ " " + startView.getTxtYourName().getText()+" " + " " + "Status:" + " " 
 					+ startModel.getClientReceive().setStrData());
+		
+			
+			WritingToHighScore.generateFile();
 			generateDataInMap();
 		});
 
@@ -82,6 +85,7 @@ public class StartController {
 	//as a result the data will be displayed in the HighScore Billboard in GUI.
 	private void generateDataInMap() {
         readingToHighScore.updateHighScore();
+        
         HashMap highScoreList = readingToHighScore.getHashMapHighScore();
         
         ArrayList poangList = readingToHighScore.getPoang();
@@ -89,21 +93,22 @@ public class StartController {
         
         ObservableList<Map> allData = FXCollections.observableArrayList();
         
-
+   
         System.out.println("highscore storlek:"+highScoreList.size());
-        for (int i = 1; i <= highScoreList.size(); i++) {
+        for (int i = 0; i < highScoreList.size();i++) {
+        	
 
         	HashMap<String, String> dataRow = new HashMap<>();    
     
-            dataRow.put(Column1Rank, ""+ i);
-            dataRow.put(Column2Score, (String) poangList.get(i));
-            dataRow.put(Column3Player, (String) highScoreList.get(i));
+            dataRow.put(Column1Rank, ""+ (i+1));
+            dataRow.put(Column2Score,(String) poangList.get(i));
+            dataRow.put(Column3Player,(String) highScoreList.get(i+1));
  			
             allData.add(dataRow); 
         }
         readingToHighScore.getHashMapHighScore().forEach((key, value) -> System.out.println(key + "+" +value));
         startView.getTable().setItems(allData);  
         
-    }
-	
+    }	
 }
+
