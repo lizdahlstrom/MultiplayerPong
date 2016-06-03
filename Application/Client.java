@@ -18,7 +18,7 @@ import java.net.UnknownHostException;
 public class Client implements Runnable {
 	//Instance variables
 	
-	//private GameClient gc;
+	private ClientHandler ClientHandler;
 	private final static String host = "localhost";
 	private InetAddress address;
 	private final static int port = 7777;
@@ -48,13 +48,13 @@ public class Client implements Runnable {
 		
 		
 		try {
-//		address = InetAddress.getByName(host);
-			socket = new DatagramSocket(port);
-//
-		//socket = new Socket(host, port);
-        //System.out.println("You connected to: "+ host);
+		//address = InetAddress.getByName(host);
+			socket = new DatagramSocket(host);
+
+		//socket = new DatagramSocket(host);
+        System.out.println("You connected to: "+ host);
 		
-        //GameClient = new GameClient(sock);
+        ClientHandler = new ClientHandler(socket);
         
 			System.out.println("Found host..");
 		} catch (SocketException e) {
