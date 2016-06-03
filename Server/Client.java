@@ -1,104 +1,150 @@
-//for test only not included in the final application
-
-
 package Server;
 
-/*
- * Java’s implementation of UDP is split into two classes: DatagramPacket and Datagram Socket. 
- * The DatagramPacket class stuffs bytes of data into UDP packets called datagrams and lets you 
- * unstuff datagrams that you receive. A DatagramSocket sends as well as receives UDP datagrams. 
- * To send data, you put the data in a DatagramPacket and send the packet using a DatagramSocket. 
- * To receive data, you take a DatagramPacket object from a DatagramSocket and then inspect the contents 
- * of the packet. The sockets themselves are very simple creatures. In UDP, everything about a datagram, 
- * including the address to which it is directed, is included in the packet itself; the socket only needs 
- * to know the local port on which to listen or send. 
- * 
- * DatagramPacket uses different constructors depending on whether the packet will be used to send data 
- * or to receive data. 
- */
-
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import Application.controller.MainController;
-import Application.view.StartMenu;
 
-public class Client extends Connection implements Runnable {
+public class Client {
 	// Instance variables
-	static private PlayerModel playerModel;
-	
-	
-	MainController mController;
-	String playerName; //Get the player's entered name.
-	
-	 
-	
-	
-	// Constructor 1
-	public Client(PlayerModel playerModel, MainController mController) {
-		this.playerModel = playerModel;
-		this.mController = mController;
-		
-	}
-	
-	// Constructor 2
-	public Client () {
-		playerName = mController.getPlayerName();
-	}
-	
-	
+	private DatagramSocket socket;
+	private DatagramPacket packet;
+	private ClientReceive clientReceive;
 
-	// RUN METHOD
-	@Override
-	public void run() {
+	private String host = "localhost";
+	private InetAddress ip = InetAddress.getByName(host);
+	private int port = 7777;
+
+	private int playerId;
+
+	// Constructor
+	public Client(int playerId) throws IOException, InterruptedException {
+		this.playerId = playerId;
+		socket = new DatagramSocket();
+		updatePos(new PacketPosXY(getPlayerId(), 21, 23, 575, 780));
+		clientReceive = new ClientReceive();
+		Thread recieveThread = new Thread(clientReceive);
+		recieveThread.run();
+
+		// Testing to send a packet...
+		// PacketPosXY packetPosXY = new PacketPosXY(playerId, 23, 23);
+		// System.out.println("created packet: " + packetPosXY.toString());
+		//
+		// ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		//
+		// ObjectOutputStream oos = new ObjectOutputStream(bos);
+		//
+		// oos.writeObject(packetPosXY);
+		// byte[] data = bos.toByteArray();
+		// DatagramPacket sendPacket = new DatagramPacket(data, data.length, ip,
+		// port);
+		// socket.send(sendPacket);
+		//
+		// System.out.println("sent packet..");
+
+		// while (true) {
+		// // RECEIVE PACKET
+		// byte[] buf = new byte[1024];
+		// System.out.println("waiting for packet");
+		// DatagramSocket inSocket = new DatagramSocket();
+		// DatagramPacket inPacket = new DatagramPacket(buf, buf.length);
+		// inSocket.receive(inPacket); // Getting packet
+		// System.out.println("got packet");
+		// buf = inPacket.getData(); // "unpacking" to buffer
+		// ByteArrayInputStream bis = new ByteArrayInputStream(buf); // Buffer
+		// ObjectInputStream ois = new ObjectInputStream(bis);
+		// try {
+		// PacketPosXY incomingPacketPosXY = (PacketPosXY) ois.readObject();
+		// System.out.println("got packet " + incomingPacketPosXY.toString());
+		// } catch (ClassNotFoundException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } // Casting
+		// // to
+		// // packetPosXY
+		// }
+
+	}
+
+	private PacketPosXY receivePacket(DatagramSocket socket) {
 		byte[] buf = new byte[1024];
-		InetAddress serverIpAddress;
+		DatagramPacket incomingPacket = new DatagramPacket(buf, buf.length);
+		PacketPosXY incomingPacketPosXY = null;
+
 		try {
-			serverIpAddress = InetAddress.getByName(host);
-
-			DatagramSocket socket = new DatagramSocket(0);
-			socket.setSoTimeout(10000);
-			DatagramPacket packet = new DatagramPacket(buf, buf.length);
-
-			/*
-			 * Thread recieveData = new Thread(new ClientRecieve(socket,
-			 * packet)); recieveData.start();
-			 */
-
-			/*
-			 * String yourName = "Player 1"; String message = "Hello from " +
-			 * yourName + " sent by the host: " + InetAddress.getLocalHost();
-			 */
-			ByteArrayOutputStream baoStream = new ByteArrayOutputStream();
-			ObjectOutputStream ooStream = new ObjectOutputStream(baoStream);
-			ooStream.writeObject(playerModel);
-			byte[] sendData = new byte[1024];
-			sendData = baoStream.toByteArray();
-			
-			
-			//SEND THE PLAYER'S ENTERED NAME TO THE SERVER.
-			String sendName = playerName;
-			byte[] nameData = sendName.getBytes("UTF-8");
-			DatagramPacket sendingName = new DatagramPacket(nameData,nameData.length,serverIpAddress, port);
-			socket.send(sendingName);
-			
-					
-			// buffer
-			/*
-			 * byte[] sendData = new byte[1]; sendData = message.getBytes();
-			 */
-
-			DatagramPacket sendPacket = new DatagramPacket(sendData,sendData.length, serverIpAddress, port);
-			socket.send(sendPacket);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			socket.receive(incomingPacket); // Getting packet
+			System.out.println("attempting to recieve");
+			buf = packet.getData(); // "unpacking" to buffer
+			ByteArrayInputStream bis = new ByteArrayInputStream(buf); // Buffer
+			ObjectInputStream ois = new ObjectInputStream(bis);
+			incomingPacketPosXY = (PacketPosXY) ois.readObject();
+			System.out.println("recieved packet" + incomingPacketPosXY.toString());
+		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
+		return incomingPacketPosXY;
+	}
 
-	}	
+	public void updatePos(PacketPosXY packetPosXY) throws IOException {
+
+		System.out.println("created packet: " + packetPosXY.toString());
+
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+		ObjectOutputStream oos = new ObjectOutputStream(bos);
+
+		oos.writeObject(packetPosXY);
+		byte[] data = bos.toByteArray();
+		DatagramPacket sendPacket = new DatagramPacket(data, data.length, ip, port);
+		socket.send(sendPacket);
+
+		System.out.println("sent packet..");
+	}
+
+	public int getPlayerId() {
+		return playerId;
+	}
+
+	public static void main(String[] args) throws IOException, InterruptedException {
+		Client client = new Client(2);
+
+		// client.updatePos(new PacketPosXY(client.getPlayerId(), 21, 23));
+
+		// Thread.sleep(1000);
+		// Client client2 = new Client(2);
+	}
+
 }
 
+class ClientReceive implements Runnable {
+
+	@Override
+	public void run() {
+		System.out.println("running clientreceiver");
+		while (true) {
+			// RECEIVE PACKET
+			byte[] buf = new byte[1024];
+			System.out.println("waiting for packet");
+
+			try {
+				DatagramSocket inSocket = new DatagramSocket();
+				DatagramPacket inPacket = new DatagramPacket(buf, buf.length);
+				inSocket.receive(inPacket);
+				System.out.println("got packet");
+				buf = inPacket.getData(); // "unpacking" to buffer
+				ByteArrayInputStream bis = new ByteArrayInputStream(buf); // Buffer
+				ObjectInputStream ois = new ObjectInputStream(bis);
+				PacketPosXY incomingPacketPosXY = (PacketPosXY) ois.readObject();
+				System.out.println("got packet " + incomingPacketPosXY.toString());
+			} catch (IOException | ClassNotFoundException e1) {
+				e1.printStackTrace();
+			} // Getting packet
+
+		}
+	}
+
+}
