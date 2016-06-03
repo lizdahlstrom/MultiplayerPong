@@ -1,6 +1,5 @@
 //This class runs the client application.
 
-
 package Application;
 
 import java.io.IOException;
@@ -8,19 +7,19 @@ import java.net.UnknownHostException;
 
 import Application.controller.GameController;
 import Application.controller.StartController;
+import Application.network.Client;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
 
-	//Instance variables
+	// Instance variables
 	private StartController sController;
 	private GameController gController;
 	private Client client;
+
 	private Thread connThread;
-
-
 
 	public static void main(String[] args) {
 		System.out.println("launching app");
@@ -34,32 +33,25 @@ public class Main extends Application {
 		Scene gameScene = gController.getPong().getScene();
 		primaryStage.setScene(startmenuScene);
 
-		//Start game
+		// Start game
 		sController.getStartMenu().getBtnStart().setOnAction(event -> {
 
-
 			primaryStage.setScene(gameScene);
-			if(gController.isPlaying()){
+			if (gController.isPlaying()) {
 				gController.stopGame();
 			}
 			gController.startGame();
-
-
 
 		});
 
 		// TODO: display endview when game is done
 
-
-
-
 		primaryStage.show();
 
 	}
 
-	//METHODS
-	public void initComponents() throws UnknownHostException, IOException{
-		//		mainController = new MainController();
+	// METHODS
+	public void initComponents() throws UnknownHostException, IOException, InterruptedException {
 		client = new Client();
 		connThread = new Thread(client);
 		connThread.start();
@@ -67,7 +59,7 @@ public class Main extends Application {
 		gController = new GameController(client);
 	}
 
-	public void setView(){
+	public void setView() {
 
 	}
 }

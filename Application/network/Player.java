@@ -1,4 +1,4 @@
-package Server;
+package Application.network;
 
 import java.io.Serializable;
 import java.net.InetAddress;
@@ -6,10 +6,10 @@ import java.net.InetAddress;
 public class Player implements Serializable {
 	// Instance variables
 	private InetAddress ip;
-	private String id;
+	private int id;
 
 	// Constructor
-	public Player(String id, InetAddress ip) {
+	public Player(int id, InetAddress ip) {
 		this.id = id;
 		this.ip = ip;
 	}
@@ -22,11 +22,11 @@ public class Player implements Serializable {
 		this.ip = ip;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

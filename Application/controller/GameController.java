@@ -2,16 +2,16 @@
 
 package Application.controller;
 
-import Application.Client;
 import Application.model.Ball;
 import Application.model.GameModel;
 import Application.model.Paddle;
 import Application.model.ScoreBoard;
+import Application.network.Client;
 import Application.view.Pong;
 
 public class GameController {
 
-	//Instance variables
+	// Instance variables
 	private GameModel gameModel;
 	private Pong gameView;
 	private boolean isPlaying = false;
@@ -28,8 +28,8 @@ public class GameController {
 
 	private Client connection;
 
-	//Constructor
-	public GameController(Client connection){
+	// Constructor
+	public GameController(Client connection) {
 		this.connection = connection;
 		scoreBoard = new ScoreBoard(WIDTH, EDGE);
 		gameModel = new GameModel(scoreBoard);
@@ -37,16 +37,16 @@ public class GameController {
 		gameView = new Pong(scoreBoard, ball, p1, p2);
 	}
 
-	//Methods
-	private void initComponents(){
+	// Methods
+	private void initComponents() {
 		p1 = new Paddle(EDGE, gameView);
 		p2 = new Paddle(WIDTH - EDGE, gameView);
 		ball = new Ball(WIDTH, HEIGHT, gameModel.getSoundEngine());
 	}
 
-	public void startGame(){
+	public void startGame() {
 
-		//TODO: Wait for other player to be ready
+		// TODO: Wait for other player to be ready
 		// if other player is ready then play
 		// update label in startmenu
 
@@ -54,13 +54,13 @@ public class GameController {
 		gameView.getGameLoop().play();
 	}
 
-	public void stopGame(){
+	public void stopGame() {
 		isPlaying = false;
 		isReady = false;
 		gameView.getGameLoop().stop();
 	}
 
-	//Setters, getters
+	// Setters, getters
 	public GameModel getGameModel() {
 		return gameModel;
 	}
@@ -69,8 +69,7 @@ public class GameController {
 		return gameView;
 	}
 
-	public boolean isPlaying(){
+	public boolean isPlaying() {
 		return isPlaying;
 	}
 }
-

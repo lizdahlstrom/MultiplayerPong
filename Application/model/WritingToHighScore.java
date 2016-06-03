@@ -13,16 +13,14 @@ import org.json.simple.JSONObject;
  */
 
 public class WritingToHighScore {
-	
 
-	
-	public static void generateFile() { 
-		
+	public static void generateFile() {
+
 		JSONObject hsObject = new JSONObject();
-		hsObject.put("HighScore","Players");
+		hsObject.put("HighScore", "Players");
 		hsObject.put("Rank", new Integer(10));
-		
-		JSONArray listOfHighScores = new JSONArray();		
+
+		JSONArray listOfHighScores = new JSONArray();
 		listOfHighScores.add("Obama");
 		listOfHighScores.add("Mother Theresa");
 		listOfHighScores.add("Butros Butros");
@@ -33,7 +31,7 @@ public class WritingToHighScore {
 		listOfHighScores.add("John Rabe");
 		listOfHighScores.add("Jeanne D'arce");
 		listOfHighScores.add("Marie Curie");
-		
+
 		JSONArray listOfPoang = new JSONArray();
 		listOfPoang.add(100);
 		listOfPoang.add(98);
@@ -45,29 +43,26 @@ public class WritingToHighScore {
 		listOfPoang.add(66);
 		listOfPoang.add(62);
 		listOfPoang.add(50);
-		
-		
-		
+
 		hsObject.put("Top ten", listOfHighScores);
 		hsObject.put("Points", listOfPoang);
-		
+
 		try {
-			//Writing to a file.
-			File file = new File("C:\\GamePong2016/MultiPlayerPong/highScoreData.json");
-			if(!file.exists()){	
-			file.createNewFile();
-			}			
+			// Writing to a file.
+			File file = new File("highScoreData.json");
+			if (!file.exists()) {
+				file.createNewFile();
+			}
 			FileWriter fileWriter = new FileWriter(file);
 			System.out.println("Writing JSON object to file.");
 			System.out.println("----------------------------");
 			System.out.println(hsObject);
-			
+
 			fileWriter.write(hsObject.toJSONString());
 			fileWriter.flush();
 			fileWriter.close();
-			}catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 }
-

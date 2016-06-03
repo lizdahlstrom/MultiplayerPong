@@ -1,4 +1,4 @@
-package Server;
+package Application.network;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,8 +8,9 @@ import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.UUID;
 
-public class Client {
+public class Client implements Runnable {
 	// Instance variables
 	private DatagramSocket socket;
 	private DatagramPacket packet;
@@ -22,13 +23,13 @@ public class Client {
 	private String playerId;
 
 	// Constructor
-	public Client(String playerId) throws IOException, InterruptedException {
-		this.playerId = playerId;
+	public Client() throws IOException, InterruptedException {
+		playerId = UUID.randomUUID().toString();
 		socket = new DatagramSocket();
 		updatePos(new PacketPosXY(getPlayerId(), 21, 23, 575, 780));
 		clientReceive = new ClientReceive();
 		Thread recieveThread = new Thread(clientReceive);
-		recieveThread.run();
+		recieveThread.start();
 
 		// Testing to send a packet...
 		// PacketPosXY packetPosXY = new PacketPosXY(playerId, 23, 23);
@@ -107,6 +108,12 @@ public class Client {
 
 	public String getPlayerId() {
 		return playerId;
+	}
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+
 	}
 
 }
