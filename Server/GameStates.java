@@ -3,19 +3,19 @@
 package Server;
 
 public class GameStates {
-	//Instance variables -- static for global use
+	// Instance variables -- static for global use
 	public static GameState current;
 
-	//Constructor
-	public GameStates(GameState current){
+	// Constructor
+	public GameStates(GameState current) {
 		this.current = current;
 	}
 
-	public enum GameState{
+	public enum GameState {
 		PENDING, GAMING, ENDED;
 	}
 
-	public void setGameState(GameState state){
+	public void setGameState(GameState state) {
 		this.current = state;
 	}
 

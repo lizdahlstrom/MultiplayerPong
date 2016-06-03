@@ -2,152 +2,154 @@ package Server;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
+import java.util.ArrayList;
 
-import Application.packet.PlayerPacket;
 import Server.GameStates.GameState;
 
-public class Server extends Connection {
-
+public class Server {
 	// Instance variables
-	static GameStates gameState;
-	static DatagramSocket socket; 
-	static DatagramPacket packet;
-	static InetAddress ip;
-	static byte[] buf = new byte[1024];
-	static final int MAX_CLIENTS = 2;
-	static InetAddress [] clientIps = new InetAddress[MAX_CLIENTS]; // only room for two
+	private int port = 7777;
+	private String host = "localhost";
+	private InetAddress ip;
 
-	static PlayerPacket[] users = new PlayerPacket[2]; // room for 2 users
+	private DatagramSocket socket;
+	private DatagramPacket packet;
 
-	//Constructor
-	public Server(){
-		gameState = new GameStates(GameState.PENDING);
-	}
+	private final int MAX_CLIENTS = 2;
+	private ArrayList<Player> players;
+	private int numOfPlayers = 0;
 
-	// MAIN METHOD
-	public static void main(String[] args) throws Exception {
-		socket = new DatagramSocket(port);
-		packet = new DatagramPacket(buf, buf.length);
-		ip = InetAddress.getByName(host);
+	private GameStates gameState;
+
+	// Constructor
+	public Server() {
+		createServer();
+		byte[] buf = new byte[1024];
 
 		while (true) {
 			try {
 
+				// RECIEVE PACKET
+				packet = new DatagramPacket(buf, buf.length);
+				socket.receive(packet); // Getting packet
+				InetAddress clientIp = packet.getAddress();
+				// System.out.println("Recieving packet from ..." +
+				// clientIp.getHostName());
 
-				// Waiting for connection..
-				System.out.println("waiting for incoming data...");
-				socket.receive(packet); // retrieving a packet
-				// Get the data from packet
-				/*if(getPacketData(packet).getClass() == PlayerPacket.class){ // if it's a playerpacket
-					for(Object user: users){
-						user = getPacketData(packet);
-					}
-					for (InetAddress ip : clientIps) {
-						ip = packet.getAddress();
-					}
-					sendToClients(packet);
-				}
-				else if (getPacketData(packet).getClass() == BallPacket.class) { // if it's a ballpacket
-					BallPacket ballPacket;
-					ballPacket = (BallPacket)getPacketData(packet);
-					sendToClients(ballPacket);
-				}
-				else { // if its something else
-					System.out.println("uknown packet format...");
-				}
+				buf = packet.getData(); // "unpacking" to buffer
+				ByteArrayInputStream bis = new ByteArrayInputStream(buf); // Buffer
+				ObjectInputStream ois = new ObjectInputStream(bis);
+				PacketPosXY packetPosXY = (PacketPosXY) ois.readObject(); // Casting
+																			// to
+																			// packetPosXY
+				// Checking server status..
+				if (!isFull()) {
 
-				switch (gameState.current) {
-				case PENDING:
-					for(Object user: users){
-						user = getPacketData(packet);
+					if (players.isEmpty()) { // If there are no players
+						numOfPlayers = 1;
+						players.add(new Player(packetPosXY.getId(), clientIp));
+						System.out.println("added player 1 ");
+						// else if there's a player already...
+					} else if (players.size() == 1 && players.get(0).getId() != packetPosXY.getId()) {
+						numOfPlayers = 2;
+						players.add(new Player(packetPosXY.getId(), clientIp));
+						System.out.println("added player 2");
 					}
 
-					if(users != null){
+					// if there are two players then ready to start game.
+					if (isFull()) {
+						System.out.println("Player array is full, ready to start game");
+						Thread.sleep(3000);
 						gameState.setGameState(GameState.GAMING);
-						//TODO: Send packet with gamestate that can be interpreted from the client side 
-						//to start the game
-
 					}
-					break;
-				case GAMING:
-					// Recieve and send package of player position and ball position to other client
+				}
 
+				// ECHO BACK PACKET to players
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				ObjectOutputStream oos = new ObjectOutputStream(bos);
+				oos.writeObject(packetPosXY); // Output stream now has packet
+				byte[] outdata = bos.toByteArray();
 
-					break;
-				case ENDED:
+				for (Player player : players) { // send to each player
+					DatagramPacket sendPacket = new DatagramPacket(outdata, outdata.length, player.getIp(), port);
+					socket.send(sendPacket);
+					System.out.println("sent packet.." + sendPacket);
+					Thread.sleep(1000);
+				}
 
-					break;
-				default:
-					break;
-				};
-				 */
+			} catch (Exception e) {
 
-
-
-
-				InetAddress ipAddress = packet.getAddress();
-				int clientPort = packet.getPort();
-				String strData = new String(packet.getData());
-				strData = strData.trim();
-				System.out.println("Message recieved: " + strData);
-
-				// send response back to client
-				// TODO: send response to other clients
-				byte[] sendData = new byte[1024];
-				String response = "Recieved data from client..";
-				sendData = response.getBytes();
-
-				DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, ipAddress, clientPort);
-				socket.send(sendPacket);
-
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 
 		}
 
-
-
 	}
 
 	// METHODS
-	public static Object getPacketData(DatagramPacket packet) throws ClassNotFoundException, IOException{
-		ByteArrayInputStream byteArrayInputStream = 
-				new ByteArrayInputStream(packet.getData(), packet.getOffset(), packet.getLength());
-		ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-		//Returning java object
-		return objectInputStream.readObject();
+
+	private void startGame() {
+		gameState.setGameState(GameState.GAMING);
 	}
 
-	public static void sendToClients(Object packet) throws IOException{
-		ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
-		ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-		byte buf[];
+	private void endGame() {
+		gameState.setGameState(GameState.ENDED);
 	}
 
-	public static boolean checkReadyStatus(){
-		Boolean status = false;
-		if (clientIps[0].isAnyLocalAddress() && clientIps[1].isAnyLocalAddress()) {
-			status = true;
+	private void addPlayer(Player player) {
+		// Checks if player already exists
+		if (!players.contains(player) && players.size() < 2) {
+			System.out.println("Added player: " + player.getIp());
+		} else {
+			System.out.println("Player already exists...");
 		}
 
-		return status;
 	}
 
-	//	public Object getData(){
-	//	
-	//		byte [] buf = new byte[1024];
-	//		ByteArrayInputStream byteArrayInputStream = 
-	//				new ByteArrayInputStream(packet.getData(), packet.getOffset(), packet.getLength());
-	//		ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-	//		user = objectInputStream.readObject();
-	//		
-	//	}
+	private void removePlayer(Player player) {
+		if (!players.isEmpty()) {
+			numOfPlayers--;
+			players.remove(player);
+			System.out.println("Removed player:" + player.getIp());
+		} else {
+			System.out.println("No player to remove..");
+		}
+	}
+
+	private void clearPlayers() {
+		players.clear();
+		System.out.println("Players cleared, game pending..");
+	}
+
+	private boolean isFull() {
+		if (players.size() == 2) {
+			return true;
+		}
+		return false;
+	}
+
+	private void createServer() {
+		try {
+			System.out.println("starting server..");
+			players = new ArrayList<>();
+			gameState = new GameStates(GameState.PENDING);
+			// ip = InetAddress.getByName(host);
+			socket = new DatagramSocket(port);
+
+		} catch (SocketException e) {
+			System.out.println("Error creating server...");
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void main(String[] args) {
+		Server server = new Server();
+	}
+
 }
