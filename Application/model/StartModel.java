@@ -6,21 +6,20 @@ public class StartModel {
 	// Instance variables
 	private ClientReceive clientReceive;
 
-	private String testStr = "Hej";
+	private String testStr = "Waiting for players..";
 	// TODO: Highscore implementation
 	// private Highscore hs;
-	
-	//Constructor
-	public StartModel(){
+
+	// Constructor
+	public StartModel() {
 		clientReceive = new ClientReceive();
 	}
 
-
-	public ClientReceive getClientReceive(){
+	public ClientReceive getClientReceive() {
 		return clientReceive;
 	}
 
-	public String getTestStr(){
+	public String getTestStr() {
 		return testStr;
 	}
 

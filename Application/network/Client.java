@@ -14,7 +14,7 @@ public class Client implements Runnable {
 	// Instance variables
 	private DatagramSocket socket;
 	private DatagramPacket packet;
-	private ClientReceive clientReceive;
+	private PacketReceiver packetReceiver;
 
 	private String host = "localhost";
 	private InetAddress ip = InetAddress.getByName(host);
@@ -24,11 +24,12 @@ public class Client implements Runnable {
 
 	// Constructor
 	public Client() throws IOException, InterruptedException {
+		System.out.println("Running client...");
 		playerId = UUID.randomUUID().toString();
 		socket = new DatagramSocket();
-		updatePos(new PacketPosXY(getPlayerId(), 21, 23, 575, 780));
-		clientReceive = new ClientReceive();
-		Thread recieveThread = new Thread(clientReceive);
+		updatePos(new PacketPosXY(playerId, 21, 23, 575, 780));
+		packetReceiver = new PacketReceiver();
+		Thread recieveThread = new Thread(packetReceiver);
 		recieveThread.start();
 
 		// Testing to send a packet...
@@ -118,7 +119,7 @@ public class Client implements Runnable {
 
 }
 
-class ClientReceive implements Runnable {
+class PacketReceiver implements Runnable {
 
 	@Override
 	public void run() {

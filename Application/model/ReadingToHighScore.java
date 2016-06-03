@@ -63,7 +63,10 @@ public class ReadingToHighScore {
 			}
 
 			// looping through hashmap content
-			hashMapHighScore.forEach((key, value) -> System.out.println(key + "+" + value));
+			/*
+			 * hashMapHighScore.forEach((key, value) -> System.out.println(key +
+			 * "+" + value));
+			 */
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
